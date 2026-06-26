@@ -11,9 +11,9 @@ export default function Footer({ settings }: Props) {
                 <div className="col-span-1 md:col-span-2">
                     <div className="flex items-center gap-3 mb-4">
                         <img
-                            src="/images/logo/logo-white.png"
+                            src="/images/logo/logo-original.png"
                             alt="Logo"
-                            className="h-10 w-auto"
+                            className="h-10 w-auto bg-aru-putih p-1 rounded-lg"
                         />
                         <span className="font-heading font-bold text-2xl text-aru-putih">
                             Alfa Reka Usaha

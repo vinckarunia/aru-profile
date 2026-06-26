@@ -12,10 +12,8 @@
         "isolatedModules": true,
         "noEmit": true,
         "allowImportingTsExtensions": true,
-        "baseUrl": ".",
-        "ignoreDeprecations": "6.0",
         "paths": {
-            "@/*": ["resources/js/*"]
+            "@/*": ["./resources/js/*"]
         },
         "types": ["vite/client"]
     },

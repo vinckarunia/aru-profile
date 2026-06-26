@@ -26,7 +26,7 @@ export default function ContactSection({ settings }: Props) {
         <section id="kontak" className="py-20 bg-aru-biru-muda">
             <div className="max-w-[1280px] mx-auto px-6">
                 <div className="text-center mb-12">
-                    <div className="inline-block bg-aru-putih text-aru-biru-tua px-3 py-1 rounded text-[13px] font-semibold tracking-[0.08em] uppercase mb-4">
+                    <div className="inline-block bg-aru-putih text-aru-merah px-3 py-1 rounded text-[13px] font-semibold tracking-[0.08em] uppercase mb-4">
                         HUBUNGI KAMI
                     </div>
                     <h2 className="font-heading font-bold text-[40px] leading-[1.3] text-aru-biru-tua">
@@ -41,11 +41,68 @@ export default function ContactSection({ settings }: Props) {
                 )}
 
                 <div className="grid md:grid-cols-2 gap-12">
+                    {/* Contact Info */}
+                    <div className="space-y-6">
+                        <div className="bg-aru-putih rounded-lg p-6">
+                            <h3 className="font-heading font-bold text-lg text-aru-biru-tua mb-4">Informasi Kontak</h3>
+                            <div className="space-y-4">
+                                {settings.address && (
+                                    <div className="flex items-start gap-3">
+                                        <span className="material-symbols-outlined text-aru-merah mt-0.5">location_on</span>
+                                        <p className="text-base text-aru-abu">{settings.address}</p>
+                                    </div>
+                                )}
+                                {settings.phone && (
+                                    <div className="flex items-center gap-3">
+                                        <span className="material-symbols-outlined text-aru-merah">phone</span>
+                                        <a href={`tel:${settings.phone}`} className="text-base text-aru-abu hover:text-aru-merah transition-colors">
+                                            {settings.phone}
+                                        </a>
+                                    </div>
+                                )}
+                                {settings.email && (
+                                    <div className="flex items-center gap-3">
+                                        <span className="material-symbols-outlined text-aru-merah">mail</span>
+                                        <a href={`mailto:${settings.email}`} className="text-base text-aru-abu hover:text-aru-merah transition-colors">
+                                            {settings.email as string}
+                                        </a>
+                                    </div>
+                                )}
+                                {settings.whatsapp && (
+                                    <div className="flex items-center gap-3">
+                                        <span className="material-symbols-outlined text-aru-merah">chat</span>
+                                        <a
+                                            href={`https://wa.me/${settings.whatsapp}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-base text-aru-abu hover:text-aru-merah transition-colors"
+                                        >
+                                            WhatsApp
+                                        </a>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {settings.maps_embed_url && (
+                            <div className="rounded overflow-hidden h-[250px]">
+                                <iframe
+                                    src={settings.maps_embed_url as string}
+                                    className="w-full h-full border-0 rounded-lg"
+                                    allowFullScreen
+                                    loading="lazy"
+                                    referrerPolicy="no-referrer-when-downgrade"
+                                    title="Lokasi Kantor"
+                                />
+                            </div>
+                        )}
+                    </div>
+
                     {/* Contact Form */}
                     <form onSubmit={submit} className="space-y-6">
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-[11px] font-normal uppercase tracking-wide text-aru-abu mb-1">Nama *</label>
+                                <label className="block text-[11px] font-normal uppercase tracking-wide text-aru-abu mb-1">Nama <span className="text-aru-merah">*</span></label>
                                 <input
                                     type="text"
                                     value={data.name}
@@ -67,7 +124,7 @@ export default function ContactSection({ settings }: Props) {
 
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-[11px] font-normal uppercase tracking-wide text-aru-abu mb-1">Email *</label>
+                                <label className="block text-[11px] font-normal uppercase tracking-wide text-aru-abu mb-1">Email <span className="text-aru-merah">*</span></label>
                                 <input
                                     type="email"
                                     value={data.email}
@@ -98,7 +155,7 @@ export default function ContactSection({ settings }: Props) {
                         </div>
 
                         <div>
-                            <label className="block text-[11px] font-normal uppercase tracking-wide text-aru-abu mb-1">Pesan *</label>
+                            <label className="block text-[11px] font-normal uppercase tracking-wide text-aru-abu mb-1">Pesan <span className="text-aru-merah">*</span></label>
                             <textarea
                                 value={data.message}
                                 onChange={e => setData('message', e.target.value)}
@@ -116,63 +173,6 @@ export default function ContactSection({ settings }: Props) {
                             {processing ? 'Mengirim...' : 'Kirim Pesan'}
                         </button>
                     </form>
-
-                    {/* Contact Info */}
-                    <div className="space-y-6">
-                        <div className="bg-aru-putih rounded p-6">
-                            <h3 className="font-heading font-semibold text-lg text-aru-biru-tua mb-4">Informasi Kontak</h3>
-                            <div className="space-y-4">
-                                {settings.address && (
-                                    <div className="flex items-start gap-3">
-                                        <span className="material-symbols-outlined text-aru-merah mt-0.5">location_on</span>
-                                        <p className="text-base text-aru-abu">{settings.address}</p>
-                                    </div>
-                                )}
-                                {settings.phone && (
-                                    <div className="flex items-center gap-3">
-                                        <span className="material-symbols-outlined text-aru-merah">phone</span>
-                                        <a href={`tel:${settings.phone}`} className="text-base text-aru-abu hover:text-aru-merah transition-colors">
-                                            {settings.phone}
-                                        </a>
-                                    </div>
-                                )}
-                                {settings.email && (
-                                    <div className="flex items-center gap-3">
-                                        <span className="material-symbols-outlined text-aru-merah">mail</span>
-                                        <a href={`mailto:${settings.email}`} className="text-base text-aru-abu hover:text-aru-merah transition-colors">
-                                            {settings.email as string}
-                                        </a>
-                                    </div>
-                                )}
-                                {settings.whatsapp && (
-                                    <div className="flex items-center gap-3">
-                                        <span className="material-symbols-outlined text-green-600">chat</span>
-                                        <a
-                                            href={`https://wa.me/${settings.whatsapp}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-base text-aru-abu hover:text-green-600 transition-colors"
-                                        >
-                                            WhatsApp
-                                        </a>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-
-                        {settings.maps_embed_url && (
-                            <div className="rounded overflow-hidden h-[250px]">
-                                <iframe
-                                    src={settings.maps_embed_url as string}
-                                    className="w-full h-full border-0"
-                                    allowFullScreen
-                                    loading="lazy"
-                                    referrerPolicy="no-referrer-when-downgrade"
-                                    title="Lokasi Kantor"
-                                />
-                            </div>
-                        )}
-                    </div>
                 </div>
             </div>
         </section>

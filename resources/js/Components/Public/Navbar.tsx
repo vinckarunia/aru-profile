@@ -6,11 +6,11 @@ interface Props {
 }
 
 const navLinks = [
-    { label: 'Beranda', href: '#' },
     { label: 'Tentang Kami', href: '#tentang' },
     { label: 'Layanan', href: '#layanan' },
     { label: 'Jangkauan', href: '#jangkauan' },
     { label: 'Klien', href: '#klien' },
+    { label: 'Galeri', href: '#galeri' },
     { label: 'Legalitas', href: '#legalitas' },
 ];
 
@@ -37,7 +37,7 @@ export default function Navbar({ settings }: Props) {
                 {/* Logo / Brand */}
                 <a href="#" className="flex items-center gap-3">
                     <img
-                        src="/images/logo/logo-white.png"
+                        src="/images/logo/logo-original-white.png"
                         alt={settings.company_name || 'Logo'}
                         className="h-10 w-auto"
                     />
