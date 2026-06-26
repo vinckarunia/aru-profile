@@ -1,7 +1,17 @@
 <?php
 
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\MediaController;
+use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Halaman publik
+Route::get('/', [PublicController::class, 'index'])->name('home');
+
+// Media serving (pengganti storage:link)
+Route::get('/media/{path}', [MediaController::class, 'serve'])
+    ->where('path', '.*')
+    ->name('media.serve');
+
+// Form kontak
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');

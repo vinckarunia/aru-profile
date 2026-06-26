@@ -4,6 +4,70 @@
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Fonts */
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-heading: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+
+    /* ARU Brand Colors */
+    --color-aru-merah: #A0003C;
+    --color-aru-biru-tua: #1A2E4A;
+    --color-aru-biru-muda: #E8EEF5;
+    --color-aru-putih: #FFFFFF;
+    --color-aru-abu: #6B7280;
+    --color-aru-emas: #C9A84C;
+
+    /* Material Design surface palette */
+    --color-surface: #f9f9ff;
+    --color-surface-dim: #d3daea;
+    --color-surface-bright: #f9f9ff;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #f0f3ff;
+    --color-surface-container: #e7eefe;
+    --color-surface-container-high: #e2e8f8;
+    --color-surface-container-highest: #dce2f3;
+    --color-on-surface: #151c27;
+    --color-on-surface-variant: #594043;
+    --color-inverse-surface: #2a313d;
+    --color-inverse-on-surface: #ebf1ff;
+    --color-outline: #8d7073;
+    --color-outline-variant: #e1bec2;
+    --color-surface-tint: #b61b4a;
+    --color-primary: #75002a;
+    --color-on-primary: #ffffff;
+    --color-primary-container: #a0003c;
+    --color-on-primary-container: #ffaab6;
+    --color-inverse-primary: #ffb2bc;
+    --color-secondary: #4c5f7e;
+    --color-on-secondary: #ffffff;
+    --color-secondary-container: #c7dbff;
+    --color-on-secondary-container: #4d607f;
+    --color-tertiary: #755b00;
+    --color-on-tertiary: #ffffff;
+    --color-tertiary-container: #c9a84c;
+    --color-on-tertiary-container: #4f3d00;
+    --color-error: #ba1a1a;
+    --color-on-error: #ffffff;
+    --color-error-container: #ffdad6;
+    --color-on-error-container: #93000a;
+    --color-surface-variant: #dce2f3;
+    --color-background: #f9f9ff;
+    --color-on-background: #151c27;
+}
+
+/* Custom utilities */
+.clip-diagonal {
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.material-symbols-outlined.filled {
+    font-variation-settings: 'FILL' 1;
+}
+
+/* Smooth scroll */
+html {
+    scroll-behavior: smooth;
 }
