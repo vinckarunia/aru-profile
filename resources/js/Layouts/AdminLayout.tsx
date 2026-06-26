@@ -29,7 +29,7 @@ export default function AdminLayout({ title, children }: Props) {
             <aside className="w-64 bg-aru-biru-tua text-aru-putih flex-shrink-0 flex flex-col min-h-screen fixed left-0 top-0 z-40">
                 <div className="p-6 border-b border-aru-putih/10">
                     <Link href="/" className="flex items-center gap-3">
-                        <img src="/images/logo/logo-white.png" alt="Logo" className="h-8 w-auto" />
+                        <img src="/images/logo/logo-original-white.png" alt="Logo" className="h-8 w-auto" />
                         <span className="font-heading font-bold text-sm tracking-wide">ADMIN PANEL</span>
                     </Link>
                 </div>

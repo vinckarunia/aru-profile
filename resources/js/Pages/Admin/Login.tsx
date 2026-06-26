@@ -19,7 +19,7 @@ export default function Login() {
             <div className="min-h-screen bg-aru-biru-tua flex items-center justify-center px-4 font-sans">
                 <div className="w-full max-w-md">
                     <div className="text-center mb-8">
-                        <img src="/images/logo/logo-white.png" alt="Logo" className="h-16 w-auto mx-auto mb-4" />
+                        <img src="/images/logo/logo-original-white.png" alt="Logo" className="h-16 w-auto mx-auto mb-4" />
                         <h1 className="font-heading font-bold text-2xl text-aru-putih">Admin Panel</h1>
                         <p className="text-aru-putih/60 text-sm mt-1">PT. Alfa Reka Usaha</p>
                     </div>

@@ -19,7 +19,7 @@ class PublicController extends Controller
         $settings = SiteSetting::allCached();
 
         // Resolve image URLs
-        $imageKeys = ['logo', 'favicon', 'hero_background', 'og_image'];
+        $imageKeys = ['hero_background', 'og_image'];
         foreach ($imageKeys as $key) {
             if (!empty($settings[$key])) {
                 $settings[$key] = url('/media/' . $settings[$key]);

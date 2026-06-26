@@ -13,8 +13,6 @@ class SiteSettingSeeder extends Seeder
             // Identity
             ['key' => 'company_name', 'value' => 'PT. Alfa Reka Usaha', 'type' => 'text', 'group' => 'identity', 'label' => 'Nama Perusahaan'],
             ['key' => 'tagline', 'value' => 'Solusi Ketenagakerjaan Terpercaya untuk Bisnis Anda', 'type' => 'text', 'group' => 'identity', 'label' => 'Tagline'],
-            ['key' => 'logo', 'value' => null, 'type' => 'image', 'group' => 'identity', 'label' => 'Logo Navbar'],
-            ['key' => 'favicon', 'value' => null, 'type' => 'image', 'group' => 'identity', 'label' => 'Favicon'],
             ['key' => 'about_short', 'value' => 'Solusi Ketenagakerjaan Terpercaya untuk Bisnis Anda. Berpengalaman melayani kebutuhan tenaga kerja nasional dan internasional.', 'type' => 'textarea', 'group' => 'identity', 'label' => 'Deskripsi Singkat Footer'],
             ['key' => 'founded_year', 'value' => '2002', 'type' => 'text', 'group' => 'identity', 'label' => 'Tahun Berdiri'],
 

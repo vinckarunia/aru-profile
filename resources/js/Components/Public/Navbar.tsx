@@ -15,12 +15,65 @@ const navLinks = [
 ];
 
 export default function Navbar({ settings }: Props) {
+    const [activeSection, setActiveSection] = useState('');
     const [scrolled, setScrolled] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
 
     useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 50);
+        // Ambil semua elemen section berdasarkan ID dari objek navLinks
+        const sectionElements = navLinks.map(link => document.querySelector(link.href));
+
+        const observerOptions = {
+            root: null, // menggunakan viewport browser
+            rootMargin: '-50% 0px -50% 0px', // Memicu pergantian saat section berada di tengah layar
+            threshold: 0
+        };
+
+        const observerCallback = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach((entry) => {
+                // Jika section tersebut mendominasi tampilan layar
+                if (entry.isIntersecting && entry.target.id) {
+                    setActiveSection(`#${entry.target.id}`);
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+        // Daftarkan setiap section ke dalam observer
+        sectionElements.forEach((el) => {
+            if (el) observer.observe(el);
+        });
+
+        return () => observer.disconnect();
+    }, []);
+
+    useEffect(() => {
+        const onScroll = () => {
+            // Mengambil elemen section tentang kami berdasarkan ID-nya
+            const aboutSection = document.getElementById('tentang');
+            
+            if (aboutSection) {
+                // Mengambil posisi jarak bagian atas section terhadap layar viewport
+                const topPos = aboutSection.getBoundingClientRect().top;
+                
+                // Jika topPos <= 72, artinya section tentang kami sudah menyentuh/berada di bawah navbar
+                if (topPos <= 72) {
+                    setScrolled(true);
+                } else {
+                    setScrolled(false);
+                }
+            } else {
+                // Fallback jika elemen tidak ditemukan, menggunakan scroll standard
+                setScrolled(window.scrollY > 400);
+            }
+        };
+
         window.addEventListener('scroll', onScroll);
+        
+        // Jalankan sekali saat pertama kali render untuk cek posisi awal
+        onScroll();
+
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
@@ -29,7 +82,7 @@ export default function Navbar({ settings }: Props) {
             id="navbar"
             className={`fixed top-0 w-full h-[72px] z-50 transition-all duration-300 ${
                 scrolled
-                    ? 'bg-aru-biru-tua shadow-lg'
+                    ? 'bg-aru-putih shadow-lg'
                     : 'bg-aru-biru-tua/90 backdrop-blur-md'
             }`}
         >
@@ -37,26 +90,27 @@ export default function Navbar({ settings }: Props) {
                 {/* Logo / Brand */}
                 <a href="#" className="flex items-center gap-3">
                     <img
-                        src="/images/logo/logo-original-white.png"
+                        src={scrolled ? "/images/logo/logo-original.png" : "/images/logo/logo-original-white.png"}
                         alt={settings.company_name || 'Logo'}
                         className="h-10 w-auto"
                     />
-                    <span className="font-heading font-bold text-lg text-aru-putih hidden sm:block tracking-wide">
-                        Alfa Reka Usaha
-                    </span>
                 </a>
 
                 {/* Desktop Nav */}
-                <div className="hidden md:flex space-x-8 items-center">
-                    {navLinks.map((link) => (
-                        <a
-                            key={link.href}
-                            href={link.href}
-                            className="text-[13px] font-semibold tracking-[0.08em] uppercase text-aru-putih hover:text-aru-merah transition-colors duration-200 hover:scale-105"
-                        >
-                            {link.label}
-                        </a>
-                    ))}
+                <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 space-x-8 items-center">
+                    {navLinks.map((link) => {
+                        const isActive = activeSection === link.href;
+
+                        return (
+                            <a
+                                key={link.href}
+                                href={link.href}
+                                className={`text-[13px] font-semibold tracking-[0.08em] uppercase hover:text-aru-merah ${(scrolled ? 'text-aru-biru-tua' : 'text-aru-putih hover:text-aru-putih')} transition-colors duration-200 hover:scale-105`}
+                            >
+                                {link.label}
+                            </a>
+                        );
+                    })}
                 </div>
 
                 {/* CTA + Mobile Toggle */}

@@ -6,7 +6,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     @php
-        $favicon = \App\Models\SiteSetting::get('favicon');
         $metaTitle = \App\Models\SiteSetting::get('meta_title', config('app.name'));
         $metaDesc = \App\Models\SiteSetting::get('meta_description', '');
     @endphp
@@ -14,9 +13,10 @@
     <title>{{ $metaTitle }}</title>
     <meta name="description" content="{{ $metaDesc }}" />
 
-    @if(!empty($favicon))
-    <link rel="icon" href="{{ url('/media/' . $favicon) }}" />
-    @endif
+    <link rel="icon" href="/images/logo/logo-original-white.png" type="image/png" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/images/logo/logo-original.png" type="image/png" media="(prefers-color-scheme: light)" />
+
+    <link rel="icon" href="/favicon.ico" />
 
     {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
