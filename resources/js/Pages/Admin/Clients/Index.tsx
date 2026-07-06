@@ -31,7 +31,7 @@ export default function ClientsIndex({ clients }: Props) {
                     <div>
                         <label className="block text-[11px] uppercase tracking-wide text-aru-abu mb-1">Tipe Klien *</label>
                         <select value={form.data.type} onChange={e => form.setData('type', e.target.value)} className="w-full border border-surface-container-high rounded px-3 py-2 text-sm bg-white">
-                            <option value="active">Klien Aktif</option>
+                            <option value="active">Klien Saat Ini</option>
                             <option value="past">Klien Terdahulu</option>
                         </select>
                     </div>
@@ -51,12 +51,12 @@ export default function ClientsIndex({ clients }: Props) {
                                 <input type="text" value={editForm.data.name} onChange={e => editForm.setData('name', e.target.value)} className="w-full border rounded px-3 py-2 text-sm" />
                                 <input type="text" value={editForm.data.website_url} onChange={e => editForm.setData('website_url', e.target.value)} className="w-full border rounded px-3 py-2 text-sm" placeholder="Website URL" />
                                 <select value={editForm.data.type} onChange={e => editForm.setData('type', e.target.value)} className="w-full border rounded px-3 py-2 text-sm bg-white">
-                                    <option value="active">Klien Aktif</option>
+                                    <option value="active">Klien Saat Ini</option>
                                     <option value="past">Klien Terdahulu</option>
                                 </select>
                                 <div className="flex items-center gap-2">
                                     <input type="checkbox" id={`is_active_${c.id}`} checked={editForm.data.is_active} onChange={e => editForm.setData('is_active', e.target.checked)} />
-                                    <label htmlFor={`is_active_${c.id}`} className="text-sm text-aru-abu">Tampilkan di Website (Aktif)</label>
+                                    <label htmlFor={`is_active_${c.id}`} className="text-sm text-aru-abu">Ditampilkan</label>
                                 </div>
                                 <ImageUploader currentUrl={c.logo_url} onUploaded={(path) => editForm.setData('logo', path)} />
                                 <div className="flex gap-2">
@@ -76,10 +76,10 @@ export default function ClientsIndex({ clients }: Props) {
                                         <h3 className="font-semibold text-aru-biru-tua">{c.name}</h3>
                                         <div className="flex gap-2 mt-1">
                                             <span className={`text-xs px-2 py-0.5 rounded-full ${c.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                                                {c.is_active ? 'Aktif' : 'Nonaktif'}
+                                                {c.is_active ? 'Ditampilkan' : 'Disembunyikan'}
                                             </span>
                                             <span className={`text-xs px-2 py-0.5 rounded-full ${c.type === 'active' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'}`}>
-                                                {c.type === 'active' ? 'Klien Aktif' : 'Klien Terdahulu'}
+                                                {c.type === 'active' ? 'Klien Saat Ini' : 'Klien Terdahulu'}
                                             </span>
                                         </div>
                                     </div>

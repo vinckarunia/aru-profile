@@ -9,6 +9,11 @@ class ContactController extends Controller
 {
     public function store(Request $request)
     {
+        // Honeypot check: If the hidden field is filled, simulate successful submission
+        if ($request->filled('website_verification')) {
+            return back()->with('success', 'Pesan Anda telah terkirim. Kami akan segera menghubungi Anda.');
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'company' => 'nullable|string|max:255',

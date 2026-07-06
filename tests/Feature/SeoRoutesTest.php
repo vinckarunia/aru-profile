@@ -44,4 +44,29 @@ class SeoRoutesTest extends TestCase
         $this->assertStringContainsString('Disallow: /admin/', $content);
         $this->assertStringContainsString('Sitemap: ' . url('/sitemap.xml'), $content);
     }
+
+    /** @test */
+    public function test_homepage_renders_server_side_seo_metadata()
+    {
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+        
+        $content = $response->getContent();
+        
+        // Assert canonical
+        $this->assertStringContainsString('<link rel="canonical" href="' . url('/') . '"', $content);
+        
+        // Assert Open Graph
+        $this->assertStringContainsString('<meta property="og:title" content="', $content);
+        $this->assertStringContainsString('<meta property="og:url" content="' . url('/') . '"', $content);
+        $this->assertStringContainsString('<meta property="og:type" content="website"', $content);
+        
+        // Assert Twitter Card
+        $this->assertStringContainsString('<meta name="twitter:card" content="summary_large_image"', $content);
+        
+        // Assert JSON-LD Organization
+        $this->assertStringContainsString('"@type":"Organization"', $content);
+        $this->assertStringContainsString('"url":"' . url('/') . '"', $content);
+    }
 }

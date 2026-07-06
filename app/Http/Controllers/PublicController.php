@@ -57,6 +57,7 @@ class PublicController extends Controller
                 }
                 return $g;
             }),
+            'siteUrl' => url('/'),
         ]);
     }
 

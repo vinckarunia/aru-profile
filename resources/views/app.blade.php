@@ -8,10 +8,66 @@
     @php
         $metaTitle = \App\Models\SiteSetting::get('meta_title', config('app.name'));
         $metaDesc = \App\Models\SiteSetting::get('meta_description', '');
+        $ogImageName = \App\Models\SiteSetting::get('og_image', '');
+        $ogImage = $ogImageName ? url('/media/' . $ogImageName) : '';
+        $companyName = \App\Models\SiteSetting::get('company_name', 'PT. Alfa Reka Usaha');
+        $phone = \App\Models\SiteSetting::get('phone', '');
+        $address = \App\Models\SiteSetting::get('address', '');
+        $email = \App\Models\SiteSetting::get('email', '');
+        $siteUrl = url('/');
+        $logoUrl = $siteUrl . '/images/logo/logo-original.png';
+
+        $orgSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Organization',
+            'name' => $companyName,
+            'url' => $siteUrl,
+            'logo' => $logoUrl,
+        ];
+        if (!empty($phone)) {
+            $orgSchema['contactPoint'] = [
+                '@type' => 'ContactPoint',
+                'telephone' => $phone,
+                'contactType' => 'customer service'
+            ];
+        }
+        if (!empty($address)) {
+            $orgSchema['address'] = [
+                '@type' => 'PostalAddress',
+                'streetAddress' => $address,
+                'addressCountry' => 'ID'
+            ];
+        }
+        if (!empty($email)) {
+            $orgSchema['email'] = $email;
+        }
     @endphp
 
     <title inertia>{{ $metaTitle }}</title>
     <meta name="description" content="{{ $metaDesc }}" inertia />
+    <link rel="canonical" href="{{ $siteUrl }}" inertia />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ $metaTitle }}" inertia />
+    <meta property="og:description" content="{{ $metaDesc }}" inertia />
+    <meta property="og:url" content="{{ $siteUrl }}" inertia />
+    @if($ogImage)
+        <meta property="og:image" content="{{ $ogImage }}" inertia />
+    @endif
+    <meta property="og:type" content="website" inertia />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" inertia />
+    <meta name="twitter:title" content="{{ $metaTitle }}" inertia />
+    <meta name="twitter:description" content="{{ $metaDesc }}" inertia />
+    @if($ogImage)
+        <meta name="twitter:image" content="{{ $ogImage }}" inertia />
+    @endif
+
+    <!-- JSON-LD Organization -->
+    <script type="application/ld+json" inertia>
+        {!! json_encode($orgSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
 
     <link rel="icon" href="/images/logo/logo-original-white.png" type="image/png" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/images/logo/logo-original.png" type="image/png" media="(prefers-color-scheme: light)" />

@@ -19,10 +19,10 @@ interface Props {
     clientsPast: ClientItem[];
     legal: LegalDocItem[];
     gallery: GalleryItem[];
+    siteUrl: string;
 }
 
-export default function Home({ settings, stats, services, cities, clientsActive, clientsPast, legal, gallery }: Props) {
-    const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://alfarekausahapt.com';
+export default function Home({ settings, stats, services, cities, clientsActive, clientsPast, legal, gallery, siteUrl }: Props) {
     const logoUrl = `${siteUrl}/images/logo/logo-original.png`;
 
     const orgSchema = {

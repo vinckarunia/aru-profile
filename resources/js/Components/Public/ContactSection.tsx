@@ -15,6 +15,7 @@ export default function ContactSection({ settings }: Props) {
         phone: '',
         subject: '',
         message: '',
+        website_verification: '',
     });
 
     const submit = (e: FormEvent) => {
@@ -100,6 +101,19 @@ export default function ContactSection({ settings }: Props) {
 
                     {/* Contact Form */}
                     <form onSubmit={submit} className="space-y-6">
+                        {/* Honeypot field */}
+                        <div className="hidden" aria-hidden="true">
+                            <label className="block text-[11px] font-normal uppercase tracking-wide text-aru-abu mb-1">Verify Website</label>
+                            <input
+                                type="text"
+                                name="website_verification"
+                                value={data.website_verification}
+                                onChange={e => setData('website_verification', e.target.value)}
+                                autoComplete="off"
+                                tabIndex={-1}
+                            />
+                        </div>
+
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-[11px] font-normal uppercase tracking-wide text-aru-abu mb-1">Nama <span className="text-aru-merah">*</span></label>
