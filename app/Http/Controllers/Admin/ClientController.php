@@ -25,6 +25,7 @@ class ClientController extends Controller
             'name' => 'required|string|max:255',
             'logo' => 'nullable|string|max:500',
             'website_url' => 'nullable|url|max:500',
+            'type' => 'required|string|in:active,past',
         ]);
 
         Client::create([...$validated, 'sort_order' => Client::max('sort_order') + 1]);
@@ -37,6 +38,7 @@ class ClientController extends Controller
             'name' => 'required|string|max:255',
             'logo' => 'nullable|string|max:500',
             'website_url' => 'nullable|string|max:500',
+            'type' => 'required|string|in:active,past',
             'is_active' => 'boolean',
         ]);
 

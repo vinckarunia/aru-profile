@@ -15,12 +15,13 @@ interface Props {
     stats: StatItem[];
     services: ServiceItem[];
     cities: CityItem[];
-    clients: ClientItem[];
+    clientsActive: ClientItem[];
+    clientsPast: ClientItem[];
     legal: LegalDocItem[];
     gallery: GalleryItem[];
 }
 
-export default function Home({ settings, stats, services, cities, clients, legal, gallery }: Props) {
+export default function Home({ settings, stats, services, cities, clientsActive, clientsPast, legal, gallery }: Props) {
     return (
         <PublicLayout settings={settings}>
             <Head title={settings.meta_title || 'Beranda'} />
@@ -29,7 +30,7 @@ export default function Home({ settings, stats, services, cities, clients, legal
             <AboutSection settings={settings} />
             <ServicesSection services={services} />
             <CoverageSection cities={cities} />
-            <ClientsSection clients={clients} />
+            <ClientsSection activeClients={clientsActive} pastClients={clientsPast} />
             {gallery.length > 0 && <GallerySection items={gallery} />}
             <LegalSection documents={legal} />
             <ContactSection settings={settings} />

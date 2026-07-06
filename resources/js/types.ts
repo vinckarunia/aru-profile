@@ -63,6 +63,7 @@ export interface ClientItem {
     logo: string | null;
     logo_url: string | null;
     website_url: string | null;
+    type: 'active' | 'past';
     sort_order: number;
     is_active: boolean;
 }

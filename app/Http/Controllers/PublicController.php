@@ -36,7 +36,11 @@ class PublicController extends Controller
             'stats' => Stat::where('is_active', true)->orderBy('sort_order')->get(),
             'services' => Service::where('is_active', true)->orderBy('sort_order')->get(),
             'cities' => CoverageCity::where('is_active', true)->orderBy('province')->orderBy('city_name')->get(),
-            'clients' => Client::where('is_active', true)->orderBy('sort_order')->get()->map(function ($c) {
+            'clientsActive' => Client::where('is_active', true)->where('type', 'active')->orderBy('sort_order')->get()->map(function ($c) {
+                $c->logo_url = $c->logo ? url('/media/' . $c->logo) : null;
+                return $c;
+            }),
+            'clientsPast' => Client::where('is_active', true)->where('type', 'past')->orderBy('sort_order')->get()->map(function ($c) {
                 $c->logo_url = $c->logo ? url('/media/' . $c->logo) : null;
                 return $c;
             }),
