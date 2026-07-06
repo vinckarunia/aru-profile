@@ -52,7 +52,7 @@ class SiteSettingSeeder extends Seeder
             ['key' => 'footer_copyright', 'value' => '© 2024 PT. Alfa Reka Usaha. Seluruh Hak Cipta Dilindungi.', 'type' => 'text', 'group' => 'footer', 'label' => 'Teks Copyright'],
             ['key' => 'privacy_url', 'value' => '#', 'type' => 'text', 'group' => 'footer', 'label' => 'URL Kebijakan Privasi'],
             ['key' => 'terms_url', 'value' => '#', 'type' => 'text', 'group' => 'footer', 'label' => 'URL Syarat & Ketentuan'],
-            ['key' => 'sitemap_url', 'value' => '#', 'type' => 'text', 'group' => 'footer', 'label' => 'URL Peta Situs'],
+            ['key' => 'sitemap_url', 'value' => '/sitemap.xml', 'type' => 'text', 'group' => 'footer', 'label' => 'URL Peta Situs'],
         ];
 
         foreach ($settings as $setting) {

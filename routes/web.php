@@ -15,3 +15,7 @@ Route::get('/media/{path}', [MediaController::class, 'serve'])
 
 // Form kontak
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+// Sitemap
+Route::get('/sitemap.xml', [PublicController::class, 'sitemap'])->name('sitemap');
+
