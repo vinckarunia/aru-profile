@@ -28,8 +28,11 @@ export default function GallerySection({ items }: Props) {
                     >
                         {item.image_url ? (
                             <img
-                                src={item.image_url}
-                                alt={item.title || ''}
+                                src={item.thumb_url || item.image_url}
+                                alt={item.title || 'Foto Aktivitas PT Alfa Reka Usaha'}
+                                loading="lazy"
+                                width="400"
+                                height="400"
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                             />
                         ) : (
@@ -66,7 +69,7 @@ export default function GallerySection({ items }: Props) {
                         {lightbox.image_url && (
                             <img
                                 src={lightbox.image_url}
-                                alt={lightbox.title || ''}
+                                alt={lightbox.title || 'Detail Foto Kegiatan'}
                                 className="w-full h-auto rounded"
                             />
                         )}

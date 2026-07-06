@@ -91,8 +91,10 @@ export default function Navbar({ settings }: Props) {
                 <a href="#" className="flex items-center gap-3">
                     <img
                         src={scrolled ? "/images/logo/logo-original.png" : "/images/logo/logo-original-white.png"}
-                        alt={settings.company_name || 'Logo'}
-                        className="h-10 w-auto"
+                        alt={settings.company_name ? `Logo ${settings.company_name}` : 'Logo PT Alfa Reka Usaha'}
+                        width="168"
+                        height="40"
+                        className="h-10 w-auto object-contain"
                     />
                 </a>
 

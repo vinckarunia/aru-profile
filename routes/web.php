@@ -19,3 +19,6 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 // Sitemap
 Route::get('/sitemap.xml', [PublicController::class, 'sitemap'])->name('sitemap');
 
+// Robots.txt
+Route::get('/robots.txt', [PublicController::class, 'robots'])->name('robots');
+

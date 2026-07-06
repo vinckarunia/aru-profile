@@ -17,7 +17,8 @@ export default function HeroSection({ settings, stats }: Props) {
                     <div className="absolute inset-0 bg-gradient-to-r from-aru-biru-tua via-aru-biru-tua/90 to-aru-biru-tua/70 z-10" />
                     <img
                         src={settings.hero_background}
-                        alt="Hero background"
+                        alt=""
+                        fetchPriority="high"
                         className="w-full h-full object-cover"
                     />
                 </div>

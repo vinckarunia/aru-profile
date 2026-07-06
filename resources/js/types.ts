@@ -87,6 +87,7 @@ export interface GalleryItem {
     description: string | null;
     image: string | null;
     image_url: string | null;
+    thumb_url?: string | null;
     sort_order: number;
     is_active: boolean;
 }

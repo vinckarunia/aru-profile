@@ -50,6 +50,11 @@ class PublicController extends Controller
             }),
             'gallery' => GalleryItem::where('is_active', true)->orderBy('sort_order')->get()->map(function ($g) {
                 $g->image_url = $g->image ? url('/media/' . $g->image) : null;
+                if ($g->image && str_ends_with($g->image, '.webp')) {
+                    $g->thumb_url = url('/media/' . str_replace('.webp', '-thumb.webp', $g->image));
+                } else {
+                    $g->thumb_url = $g->image_url;
+                }
                 return $g;
             }),
         ]);
@@ -61,13 +66,21 @@ class PublicController extends Controller
         $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
         $xml .= '    <url>' . PHP_EOL;
         $xml .= '        <loc>' . url('/') . '</loc>' . PHP_EOL;
-        $xml .= '        <lastmod>' . now()->format('Y-m-d') . '</lastmod>' . PHP_EOL;
-        $xml .= '        <changefreq>daily</changefreq>' . PHP_EOL;
-        $xml .= '        <priority>1.0</priority>' . PHP_EOL;
         $xml .= '    </url>' . PHP_EOL;
         $xml .= '</urlset>';
 
         return response($xml)
             ->header('Content-Type', 'text/xml');
+    }
+
+    public function robots(): \Illuminate\Http\Response
+    {
+        $content = 'User-agent: *' . PHP_EOL;
+        $content .= 'Disallow: /admin' . PHP_EOL;
+        $content .= 'Disallow: /admin/' . PHP_EOL . PHP_EOL;
+        $content .= 'Sitemap: ' . url('/sitemap.xml') . PHP_EOL;
+
+        return response($content)
+            ->header('Content-Type', 'text/plain');
     }
 }

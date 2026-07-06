@@ -31,16 +31,17 @@ class SeoRoutesTest extends TestCase
     }
 
     /** @test */
-    public function test_robots_txt_file_exists_and_contains_sitemap()
+    public function test_robots_txt_returns_correct_content()
     {
-        $robotsPath = public_path('robots.txt');
+        $response = $this->get('/robots.txt');
+
+        $response->assertStatus(200);
+        $response->assertHeader('Content-Type', 'text/plain; charset=UTF-8');
         
-        $this->assertFileExists($robotsPath);
-        
-        $content = file_get_contents($robotsPath);
+        $content = $response->getContent();
         $this->assertStringContainsString('User-agent: *', $content);
         $this->assertStringContainsString('Disallow: /admin', $content);
         $this->assertStringContainsString('Disallow: /admin/', $content);
-        $this->assertStringContainsString('Sitemap: https://alfarekausahapt.com/sitemap.xml', $content);
+        $this->assertStringContainsString('Sitemap: ' . url('/sitemap.xml'), $content);
     }
 }

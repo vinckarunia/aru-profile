@@ -12,8 +12,11 @@ export default function Footer({ settings }: Props) {
                     <div className="flex items-center gap-3 mb-4">
                         <img
                             src="/images/logo/logo-original-white.png"
-                            alt="Logo"
-                            className="h-10 w-auto"
+                            alt={`Logo ${settings.company_name || 'PT Alfa Reka Usaha'}`}
+                            loading="lazy"
+                            width="168"
+                            height="40"
+                            className="h-10 w-auto object-contain"
                         />
                         <span className="font-heading font-bold text-2xl text-aru-putih">
                             Alfa Reka Usaha

@@ -10,8 +10,8 @@
         $metaDesc = \App\Models\SiteSetting::get('meta_description', '');
     @endphp
 
-    <title>{{ $metaTitle }}</title>
-    <meta name="description" content="{{ $metaDesc }}" />
+    <title inertia>{{ $metaTitle }}</title>
+    <meta name="description" content="{{ $metaDesc }}" inertia />
 
     <link rel="icon" href="/images/logo/logo-original-white.png" type="image/png" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/images/logo/logo-original.png" type="image/png" media="(prefers-color-scheme: light)" />
