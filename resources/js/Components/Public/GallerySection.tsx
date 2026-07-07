@@ -63,7 +63,7 @@ export default function GallerySection({ items }: Props) {
                             />
                         ) : (
                             <div className="w-full h-full bg-aru-biru-muda flex items-center justify-center">
-                                <span className="material-symbols-outlined text-aru-abu/30 text-5xl">
+                                <span className="material-symbols-outlined text-aru-abu/30 text-5xl" aria-hidden="true">
                                     photo_camera
                                 </span>
                             </div>
@@ -110,7 +110,7 @@ export default function GallerySection({ items }: Props) {
                                 onClick={() => setLightbox(null)}
                                 className="absolute -top-12 right-0 text-aru-putih hover:text-aru-merah transition-colors cursor-pointer"
                             >
-                                <span className="material-symbols-outlined text-3xl">close</span>
+                                <span className="material-symbols-outlined text-3xl" aria-hidden="true">close</span>
                             </button>
                             {lightbox.image_url && (
                                 <img

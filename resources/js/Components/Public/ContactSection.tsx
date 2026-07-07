@@ -64,18 +64,18 @@ export default function ContactSection({ settings }: Props) {
                 <div className="grid md:grid-cols-2 gap-12">
                     {/* Contact Info */}
                     <Stagger staggerDelay={0.08} className="space-y-6">
-                        <StaggerItem className="bg-aru-putih rounded-lg p-6">
+                        <StaggerItem data-nosnippet className="bg-aru-putih rounded-lg p-6">
                             <h3 className="font-heading font-bold text-lg text-aru-biru-tua mb-4">Informasi Kontak</h3>
                             <div className="space-y-4">
                                 {settings.address && (
                                     <div className="flex items-start gap-3">
-                                        <span className="material-symbols-outlined text-aru-merah mt-0.5">location_on</span>
+                                        <span className="material-symbols-outlined text-aru-merah mt-0.5" aria-hidden="true">location_on</span>
                                         <p className="text-base text-aru-abu">{settings.address}</p>
                                     </div>
                                 )}
                                 {settings.phone && (
                                     <div className="flex items-center gap-3">
-                                        <span className="material-symbols-outlined text-aru-merah">phone</span>
+                                        <span className="material-symbols-outlined text-aru-merah" aria-hidden="true">phone</span>
                                         <a href={`tel:${settings.phone}`} className="text-base text-aru-abu hover:text-aru-merah transition-colors">
                                             {settings.phone}
                                         </a>
@@ -83,7 +83,7 @@ export default function ContactSection({ settings }: Props) {
                                 )}
                                 {settings.email && (
                                     <div className="flex items-center gap-3">
-                                        <span className="material-symbols-outlined text-aru-merah">mail</span>
+                                        <span className="material-symbols-outlined text-aru-merah" aria-hidden="true">mail</span>
                                         <a href={`mailto:${settings.email}`} className="text-base text-aru-abu hover:text-aru-merah transition-colors">
                                             {settings.email as string}
                                         </a>
@@ -91,7 +91,7 @@ export default function ContactSection({ settings }: Props) {
                                 )}
                                 {settings.whatsapp && (
                                     <div className="flex items-center gap-3">
-                                        <span className="material-symbols-outlined text-aru-merah">chat</span>
+                                        <span className="material-symbols-outlined text-aru-merah" aria-hidden="true">chat</span>
                                         <a
                                             href={`https://wa.me/${settings.whatsapp}`}
                                             target="_blank"

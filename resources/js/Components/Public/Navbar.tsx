@@ -94,6 +94,7 @@ export default function Navbar({ settings }: Props) {
     return (
         <nav
             id="navbar"
+            data-nosnippet
             className={`fixed top-0 w-full h-[72px] z-50 transition-all duration-300 ${
                 scrolled
                     ? 'bg-aru-putih shadow-lg'
@@ -146,6 +147,7 @@ export default function Navbar({ settings }: Props) {
                         <AnimatePresence mode="wait">
                             <motion.span
                                 key={mobileOpen ? 'close' : 'menu'}
+                                aria-hidden="true"
                                 initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, rotate: mobileOpen ? -90 : 90 }}
                                 animate={{ opacity: 1, rotate: 0 }}
                                 exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, rotate: mobileOpen ? 90 : -90 }}

@@ -33,7 +33,7 @@ export default function LegalSection({ documents }: Props) {
                             className="bg-aru-putih border-l-4 border-aru-emas rounded-lg p-6 hover:shadow-md transition-shadow"
                         >
                             <div className="flex items-start gap-3">
-                                <span className="material-symbols-outlined text-aru-emas text-2xl mt-0.5 filled">
+                                <span className="material-symbols-outlined text-aru-emas text-2xl mt-0.5 filled" aria-hidden="true">
                                     verified
                                 </span>
                                 <div className="flex-1 min-w-0">

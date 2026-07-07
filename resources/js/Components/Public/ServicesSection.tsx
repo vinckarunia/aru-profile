@@ -59,6 +59,7 @@ export default function ServicesSection({ services }: Props) {
                             {service.icon && (
                                 <motion.span
                                     variants={iconVariants}
+                                    aria-hidden="true"
                                     className="material-symbols-outlined text-aru-merah text-4xl mb-4 block origin-left"
                                 >
                                     {service.icon}

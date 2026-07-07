@@ -38,7 +38,7 @@ export default function CoverageSection({ cities }: Props) {
                         className="bg-aru-putih border border-surface-container-high rounded-xl p-6 hover:shadow-md transition-shadow"
                     >
                         <div className="flex items-center gap-2 mb-3">
-                            <span className="material-symbols-outlined text-aru-merah">location_on</span>
+                            <span className="material-symbols-outlined text-aru-merah" aria-hidden="true">location_on</span>
                             <h3 className="font-heading font-bold text-lg text-aru-biru-tua">
                                 {province}
                             </h3>

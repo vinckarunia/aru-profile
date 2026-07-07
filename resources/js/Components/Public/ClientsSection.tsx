@@ -47,7 +47,7 @@ export default function ClientsSection({ activeClients, pastClients }: Props) {
                 </div>
 
                 {/* Tab Switcher */}
-                <div className="flex justify-center gap-4 mb-10">
+                <div data-nosnippet className="flex justify-center gap-4 mb-10">
                     <button
                         type="button"
                         onClick={() => handleTabChange('active')}
@@ -103,7 +103,7 @@ export default function ClientsSection({ activeClients, pastClients }: Props) {
                         >
                             {displayedClients.length === 0 ? (
                                 <div className="text-center py-16 bg-aru-putih/50 rounded-2xl border border-dashed border-aru-abu/20 max-w-md mx-auto">
-                                    <span className="material-symbols-outlined text-aru-abu/30 text-5xl mb-3 block">
+                                    <span className="material-symbols-outlined text-aru-abu/30 text-5xl mb-3 block" aria-hidden="true">
                                         business
                                     </span>
                                     <p className="text-aru-abu text-sm font-medium">
@@ -129,7 +129,7 @@ export default function ClientsSection({ activeClients, pastClients }: Props) {
                                                     />
                                                 ) : (
                                                     <div className="text-center">
-                                                        <span className="material-symbols-outlined text-aru-abu/40 text-3xl mb-1 block group-hover:text-aru-merah transition-colors">
+                                                        <span className="material-symbols-outlined text-aru-abu/40 text-3xl mb-1 block group-hover:text-aru-merah transition-colors" aria-hidden="true">
                                                             business
                                                         </span>
                                                         <span className="text-[11px] font-semibold text-aru-abu/60 leading-tight block">
@@ -183,7 +183,7 @@ export default function ClientsSection({ activeClients, pastClients }: Props) {
                                                     />
                                                 ) : (
                                                     <div className="text-center">
-                                                        <span className="material-symbols-outlined text-aru-abu/40 text-3xl mb-1 block group-hover:text-aru-merah transition-colors">
+                                                        <span className="material-symbols-outlined text-aru-abu/40 text-3xl mb-1 block group-hover:text-aru-merah transition-colors" aria-hidden="true">
                                                             business
                                                         </span>
                                                         <span className="text-[11px] font-semibold text-aru-abu/60 leading-tight block">
