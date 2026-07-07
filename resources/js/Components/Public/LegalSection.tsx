@@ -1,4 +1,5 @@
 import { LegalDocItem } from '@/types';
+import { Stagger, StaggerItem } from '../Motion/Stagger';
 
 interface Props {
     documents: LegalDocItem[];
@@ -20,10 +21,15 @@ export default function LegalSection({ documents }: Props) {
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <Stagger
+                    staggerDelay={0.08}
+                    className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+                >
                     {documents.map((doc) => (
-                        <div
+                        <StaggerItem
                             key={doc.id}
+                            y={16}
+                            duration={0.4}
                             className="bg-aru-putih border-l-4 border-aru-emas rounded-lg p-6 hover:shadow-md transition-shadow"
                         >
                             <div className="flex items-start gap-3">
@@ -51,9 +57,9 @@ export default function LegalSection({ documents }: Props) {
                                     )}
                                 </div>
                             </div>
-                        </div>
+                        </StaggerItem>
                     ))}
-                </div>
+                </Stagger>
             </div>
         </section>
     );

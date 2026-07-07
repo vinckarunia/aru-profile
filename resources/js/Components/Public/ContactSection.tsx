@@ -1,6 +1,8 @@
 import { useForm, usePage } from '@inertiajs/react';
 import { Settings, PageProps } from '@/types';
 import { FormEvent } from 'react';
+import { motion, AnimatePresence, useReducedMotion, Variants } from 'motion/react';
+import { Stagger, StaggerItem } from '../Motion/Stagger';
 
 interface Props {
     settings: Settings;
@@ -8,6 +10,7 @@ interface Props {
 
 export default function ContactSection({ settings }: Props) {
     const { flash } = usePage<PageProps>().props;
+    const shouldReduceMotion = useReducedMotion();
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         company: '',
@@ -23,6 +26,15 @@ export default function ContactSection({ settings }: Props) {
         post('/contact', { onSuccess: () => reset() });
     };
 
+    const formVariants: Variants = {
+        hidden: shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.5, delay: 0.1, ease: 'easeOut' as const },
+        },
+    };
+
     return (
         <section id="kontak" className="py-20 bg-aru-biru-muda">
             <div className="max-w-[1280px] mx-auto px-6">
@@ -35,16 +47,24 @@ export default function ContactSection({ settings }: Props) {
                     </h2>
                 </div>
 
-                {flash?.success && (
-                    <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-800 rounded text-center">
-                        {flash.success}
-                    </div>
-                )}
+                <AnimatePresence>
+                    {flash?.success && (
+                        <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.25, ease: 'easeOut' as const }}
+                            className="mb-6 p-4 bg-green-50 border border-green-200 text-green-800 rounded text-center overflow-hidden"
+                        >
+                            {flash.success}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
                 <div className="grid md:grid-cols-2 gap-12">
                     {/* Contact Info */}
-                    <div className="space-y-6">
-                        <div className="bg-aru-putih rounded-lg p-6">
+                    <Stagger staggerDelay={0.08} className="space-y-6">
+                        <StaggerItem className="bg-aru-putih rounded-lg p-6">
                             <h3 className="font-heading font-bold text-lg text-aru-biru-tua mb-4">Informasi Kontak</h3>
                             <div className="space-y-4">
                                 {settings.address && (
@@ -83,10 +103,10 @@ export default function ContactSection({ settings }: Props) {
                                     </div>
                                 )}
                             </div>
-                        </div>
+                        </StaggerItem>
 
                         {settings.maps_embed_url && (
-                            <div className="rounded overflow-hidden h-[250px]">
+                            <StaggerItem className="rounded overflow-hidden h-[250px]">
                                 <iframe
                                     src={settings.maps_embed_url as string}
                                     className="w-full h-full border-0 rounded-lg"
@@ -95,12 +115,19 @@ export default function ContactSection({ settings }: Props) {
                                     referrerPolicy="no-referrer-when-downgrade"
                                     title="Lokasi Kantor"
                                 />
-                            </div>
+                            </StaggerItem>
                         )}
-                    </div>
+                    </Stagger>
 
                     {/* Contact Form */}
-                    <form onSubmit={submit} className="space-y-6">
+                    <motion.form
+                        onSubmit={submit}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        variants={formVariants}
+                        className="space-y-6"
+                    >
                         {/* Honeypot field */}
                         <div className="hidden" aria-hidden="true">
                             <label className="block text-[11px] font-normal uppercase tracking-wide text-aru-abu mb-1">Verify Website</label>
@@ -179,14 +206,16 @@ export default function ContactSection({ settings }: Props) {
                             {errors.message && <p className="text-error text-[11px] mt-1">{errors.message}</p>}
                         </div>
 
-                        <button
+                        <motion.button
                             type="submit"
                             disabled={processing}
-                            className="bg-aru-merah text-aru-putih px-8 py-3 rounded text-[13px] font-semibold tracking-[0.08em] uppercase hover:scale-[1.03] active:scale-95 transition-all disabled:opacity-50"
+                            whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
+                            whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
+                            className="bg-aru-merah text-aru-putih px-8 py-3 rounded text-[13px] font-semibold tracking-[0.08em] uppercase disabled:opacity-50 transition-colors cursor-pointer"
                         >
                             {processing ? 'Mengirim...' : 'Kirim Pesan'}
-                        </button>
-                    </form>
+                        </motion.button>
+                    </motion.form>
                 </div>
             </div>
         </section>

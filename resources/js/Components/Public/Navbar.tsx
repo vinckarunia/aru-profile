@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Settings } from '@/types';
+import { motion, AnimatePresence, useReducedMotion, Variants } from 'motion/react';
+import { Stagger, StaggerItem } from '../Motion/Stagger';
 
 interface Props {
     settings: Settings;
@@ -18,6 +20,7 @@ export default function Navbar({ settings }: Props) {
     const [activeSection, setActiveSection] = useState('');
     const [scrolled, setScrolled] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
+    const shouldReduceMotion = useReducedMotion();
 
     useEffect(() => {
         // Ambil semua elemen section berdasarkan ID dari objek navLinks
@@ -77,6 +80,17 @@ export default function Navbar({ settings }: Props) {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
+    const menuVariants: Variants = {
+        hidden: shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0, y: -16 },
+        visible: {
+            opacity: 1,
+            height: 'auto',
+            y: 0,
+            transition: { duration: 0.25, ease: 'easeOut' as const },
+        },
+        exit: shouldReduceMotion ? { opacity: 0 } : { opacity: 0, height: 0, y: -16, transition: { duration: 0.2, ease: 'easeIn' as const } },
+    };
+
     return (
         <nav
             id="navbar"
@@ -117,47 +131,72 @@ export default function Navbar({ settings }: Props) {
 
                 {/* CTA + Mobile Toggle */}
                 <div className="flex items-center gap-4">
-                    <a
+                    <motion.a
                         href="#kontak"
-                        className="hidden md:inline-flex items-center justify-center bg-aru-merah text-aru-putih px-6 py-2.5 rounded text-[13px] font-semibold tracking-[0.08em] uppercase hover:scale-[1.03] active:scale-95 transition-all duration-150"
+                        whileHover={shouldReduceMotion ? {} : { scale: 1.03 }}
+                        whileTap={shouldReduceMotion ? {} : { scale: 0.97 }}
+                        className="hidden md:inline-flex items-center justify-center bg-aru-merah text-aru-putih px-6 py-2.5 rounded text-[13px] font-semibold tracking-[0.08em] uppercase transition-colors"
                     >
                         Hubungi Kami
-                    </a>
+                    </motion.a>
                     <button
-                        className="md:hidden text-aru-putih"
+                        className="md:hidden relative w-8 h-8 flex items-center justify-center cursor-pointer"
                         onClick={() => setMobileOpen(!mobileOpen)}
                     >
-                        <span className="material-symbols-outlined text-3xl">
-                            {mobileOpen ? 'close' : 'menu'}
-                        </span>
+                        <AnimatePresence mode="wait">
+                            <motion.span
+                                key={mobileOpen ? 'close' : 'menu'}
+                                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, rotate: mobileOpen ? -90 : 90 }}
+                                animate={{ opacity: 1, rotate: 0 }}
+                                exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, rotate: mobileOpen ? 90 : -90 }}
+                                transition={{ duration: 0.2 }}
+                                className={`material-symbols-outlined text-3xl absolute ${scrolled ? 'text-aru-biru-tua' : 'text-aru-putih'}`}
+                            >
+                                {mobileOpen ? 'close' : 'menu'}
+                            </motion.span>
+                        </AnimatePresence>
                     </button>
                 </div>
             </div>
 
             {/* Mobile Menu */}
-            {mobileOpen && (
-                <div className="md:hidden bg-aru-biru-tua border-t border-aru-putih/10 animate-[slideDown_0.2s_ease-out]">
-                    <div className="flex flex-col py-4 px-6 space-y-4">
-                        {navLinks.map((link) => (
-                            <a
-                                key={link.href}
-                                href={link.href}
-                                onClick={() => setMobileOpen(false)}
-                                className="text-[13px] font-semibold tracking-[0.08em] uppercase text-aru-putih hover:text-aru-merah transition-colors py-2"
-                            >
-                                {link.label}
-                            </a>
-                        ))}
-                        <a
-                            href="#kontak"
-                            onClick={() => setMobileOpen(false)}
-                            className="inline-flex items-center justify-center bg-aru-merah text-aru-putih px-6 py-3 rounded text-[13px] font-semibold tracking-[0.08em] uppercase"
+            <AnimatePresence>
+                {mobileOpen && (
+                    <motion.div
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        variants={menuVariants}
+                        className="md:hidden bg-aru-biru-tua border-t border-aru-putih/10 overflow-hidden"
+                    >
+                        <Stagger
+                            staggerDelay={0.07}
+                            useViewport={false}
+                            className="flex flex-col py-4 px-6 space-y-4"
                         >
-                            Hubungi Kami
-                        </a>
-                    </div>
-                </div>
-            )}
+                            {navLinks.map((link) => (
+                                <StaggerItem
+                                    key={link.href}
+                                    as="a"
+                                    href={link.href}
+                                    onClick={() => setMobileOpen(false)}
+                                    className="text-[13px] font-semibold tracking-[0.08em] uppercase text-aru-putih hover:text-aru-merah transition-colors py-2"
+                                >
+                                    {link.label}
+                                </StaggerItem>
+                            ))}
+                            <StaggerItem
+                                as="a"
+                                href="#kontak"
+                                onClick={() => setMobileOpen(false)}
+                                className="inline-flex items-center justify-center bg-aru-merah text-aru-putih px-6 py-3 rounded text-[13px] font-semibold tracking-[0.08em] uppercase"
+                            >
+                                Hubungi Kami
+                            </StaggerItem>
+                        </Stagger>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </nav>
     );
 }

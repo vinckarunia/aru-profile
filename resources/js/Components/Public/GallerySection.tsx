@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { GalleryItem } from '@/types';
+import { motion, AnimatePresence, useReducedMotion, Variants } from 'motion/react';
+import { Stagger, StaggerItem } from '../Motion/Stagger';
 
 interface Props {
     items: GalleryItem[];
@@ -7,6 +9,22 @@ interface Props {
 
 export default function GallerySection({ items }: Props) {
     const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
+    const shouldReduceMotion = useReducedMotion();
+
+    const imageVariants: Variants = {
+        initial: { scale: 1 },
+        hover: shouldReduceMotion ? { scale: 1 } : { scale: 1.04 },
+    };
+
+    const overlayVariants: Variants = {
+        initial: { backgroundColor: 'rgba(15, 29, 51, 0)' },
+        hover: { backgroundColor: 'rgba(15, 29, 51, 0.5)' },
+    };
+
+    const textVariants: Variants = {
+        initial: shouldReduceMotion ? { y: 0, opacity: 1 } : { y: 8, opacity: 0 },
+        hover: { y: 0, opacity: 1 },
+    };
 
     return (
         <section className="py-20 max-w-[1280px] mx-auto px-6" id="galeri">
@@ -19,21 +37,29 @@ export default function GallerySection({ items }: Props) {
                 </h2>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <Stagger
+                staggerDelay={0.07}
+                className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+            >
                 {items.map((item) => (
-                    <div
+                    <StaggerItem
                         key={item.id}
+                        as="div"
+                        whileHover="hover"
+                        initial="initial"
                         className="relative aspect-square overflow-hidden rounded group cursor-pointer"
                         onClick={() => setLightbox(item)}
                     >
                         {item.image_url ? (
-                            <img
+                            <motion.img
                                 src={item.thumb_url || item.image_url}
                                 alt={item.title || 'Foto Aktivitas PT Alfa Reka Usaha'}
                                 loading="lazy"
                                 width="400"
                                 height="400"
-                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                variants={imageVariants}
+                                transition={{ duration: 0.35, ease: 'easeOut' as const }}
+                                className="w-full h-full object-cover"
                             />
                         ) : (
                             <div className="w-full h-full bg-aru-biru-muda flex items-center justify-center">
@@ -42,46 +68,67 @@ export default function GallerySection({ items }: Props) {
                                 </span>
                             </div>
                         )}
-                        <div className="absolute inset-0 bg-aru-biru-tua/0 group-hover:bg-aru-biru-tua/50 transition-all duration-300 flex items-end">
+                        <motion.div
+                            variants={overlayVariants}
+                            transition={{ duration: 0.3 }}
+                            className="absolute inset-0 flex items-end"
+                        >
                             {item.title && (
-                                <div className="p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                                <motion.div
+                                    variants={textVariants}
+                                    transition={{ duration: 0.3, ease: 'easeOut' as const }}
+                                    className="p-4 w-full"
+                                >
                                     <p className="text-aru-putih text-sm font-semibold">{item.title}</p>
-                                </div>
+                                </motion.div>
                             )}
-                        </div>
-                    </div>
+                        </motion.div>
+                    </StaggerItem>
                 ))}
-            </div>
+            </Stagger>
 
             {/* Lightbox Modal */}
-            {lightbox && (
-                <div
-                    className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
-                    onClick={() => setLightbox(null)}
-                >
-                    <div className="relative max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
-                        <button
-                            onClick={() => setLightbox(null)}
-                            className="absolute -top-12 right-0 text-aru-putih hover:text-aru-merah transition-colors"
+            <AnimatePresence>
+                {lightbox && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+                        onClick={() => setLightbox(null)}
+                    >
+                        <motion.div
+                            initial={shouldReduceMotion ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.96, y: 12 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={shouldReduceMotion ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.96, y: 12 }}
+                            transition={{ duration: 0.3, ease: 'easeOut' as const }}
+                            className="relative max-w-4xl w-full"
+                            onClick={(e) => e.stopPropagation()}
                         >
-                            <span className="material-symbols-outlined text-3xl">close</span>
-                        </button>
-                        {lightbox.image_url && (
-                            <img
-                                src={lightbox.image_url}
-                                alt={lightbox.title || 'Detail Foto Kegiatan'}
-                                className="w-full h-auto rounded"
-                            />
-                        )}
-                        {(lightbox.title || lightbox.description) && (
-                            <div className="mt-4 text-aru-putih">
-                                {lightbox.title && <h3 className="font-heading font-semibold text-xl">{lightbox.title}</h3>}
-                                {lightbox.description && <p className="text-aru-putih/70 mt-1">{lightbox.description}</p>}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            )}
+                            <button
+                                onClick={() => setLightbox(null)}
+                                className="absolute -top-12 right-0 text-aru-putih hover:text-aru-merah transition-colors cursor-pointer"
+                            >
+                                <span className="material-symbols-outlined text-3xl">close</span>
+                            </button>
+                            {lightbox.image_url && (
+                                <img
+                                    src={lightbox.image_url}
+                                    alt={lightbox.title || 'Detail Foto Kegiatan'}
+                                    className="w-full h-auto rounded"
+                                />
+                            )}
+                            {(lightbox.title || lightbox.description) && (
+                                <div className="mt-4 text-aru-putih">
+                                    {lightbox.title && <h3 className="font-heading font-semibold text-xl">{lightbox.title}</h3>}
+                                    {lightbox.description && <p className="text-aru-putih/70 mt-1">{lightbox.description}</p>}
+                                </div>
+                            )}
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 }

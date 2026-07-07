@@ -42,11 +42,6 @@ export default function Footer({ settings }: Props) {
                                 Syarat &amp; Ketentuan
                             </a>
                         </li>
-                        <li>
-                            <a href={settings.sitemap_url || '#'} className="text-aru-biru-muda/70 hover:text-aru-putih hover:translate-x-1 transition-all inline-block">
-                                Peta Situs
-                            </a>
-                        </li>
                     </ul>
                 </div>
 

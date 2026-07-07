@@ -1,4 +1,5 @@
 import { CityItem } from '@/types';
+import { Stagger, StaggerItem } from '../Motion/Stagger';
 
 interface Props {
     cities: CityItem[];
@@ -27,9 +28,12 @@ export default function CoverageSection({ cities }: Props) {
                 </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Stagger
+                staggerDelay={0.07}
+                className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
                 {Object.entries(grouped).map(([province, provinceCities]) => (
-                    <div
+                    <StaggerItem
                         key={province}
                         className="bg-aru-putih border border-surface-container-high rounded-xl p-6 hover:shadow-md transition-shadow"
                     >
@@ -49,9 +53,9 @@ export default function CoverageSection({ cities }: Props) {
                                 </span>
                             ))}
                         </div>
-                    </div>
+                    </StaggerItem>
                 ))}
-            </div>
+            </Stagger>
         </section>
     );
 }
