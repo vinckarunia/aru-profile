@@ -23,7 +23,9 @@ class GalleryItemController extends Controller
     {
         $validated = $request->validate([
             'title' => 'nullable|string|max:255',
+            'title_en' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'description_en' => 'nullable|string',
             'image' => 'nullable|string|max:500',
         ]);
 
@@ -35,7 +37,9 @@ class GalleryItemController extends Controller
     {
         $validated = $request->validate([
             'title' => 'nullable|string|max:255',
+            'title_en' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'description_en' => 'nullable|string',
             'image' => 'nullable|string|max:500',
             'is_active' => 'boolean',
         ]);

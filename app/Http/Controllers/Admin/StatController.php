@@ -21,6 +21,7 @@ class StatController extends Controller
         $validated = $request->validate([
             'value' => 'required|string|max:50',
             'label' => 'required|string|max:255',
+            'label_en' => 'nullable|string|max:255',
         ]);
 
         Stat::create([...$validated, 'sort_order' => Stat::max('sort_order') + 1]);
@@ -33,6 +34,7 @@ class StatController extends Controller
         $validated = $request->validate([
             'value' => 'required|string|max:50',
             'label' => 'required|string|max:255',
+            'label_en' => 'nullable|string|max:255',
             'is_active' => 'boolean',
         ]);
 

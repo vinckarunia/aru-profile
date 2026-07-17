@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { GalleryItem } from '@/types';
 import { motion, AnimatePresence, useReducedMotion, Variants } from 'motion/react';
 import { Stagger, StaggerItem } from '../Motion/Stagger';
+import { useLanguage } from '@/Contexts/LanguageContext';
 
 interface Props {
     items: GalleryItem[];
 }
 
 export default function GallerySection({ items }: Props) {
+    const { t, getLocalized } = useLanguage();
     const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
     const shouldReduceMotion = useReducedMotion();
 
@@ -28,12 +30,12 @@ export default function GallerySection({ items }: Props) {
 
     return (
         <section className="py-20 max-w-[1280px] mx-auto px-6" id="galeri">
-            <div className="text-center mb-12">
+            <div className="text-center mb-12 animate-fade-in">
                 <div className="inline-block bg-aru-biru-muda text-aru-merah px-3 py-1 rounded text-[13px] font-semibold tracking-[0.08em] uppercase mb-4">
-                    GALERI
+                    {t('nav_gallery')}
                 </div>
                 <h2 className="font-heading font-bold text-[40px] leading-[1.3] text-aru-biru-tua">
-                    Aktivitas Kami
+                    {t('gallery_title')}
                 </h2>
             </div>
 
@@ -53,7 +55,7 @@ export default function GallerySection({ items }: Props) {
                         {item.image_url ? (
                             <motion.img
                                 src={item.thumb_url || item.image_url}
-                                alt={item.title || 'Foto Aktivitas PT Alfa Reka Usaha'}
+                                alt={getLocalized('title', item) || 'Foto Aktivitas PT Alfa Reka Usaha'}
                                 loading="lazy"
                                 width="400"
                                 height="400"
@@ -73,13 +75,13 @@ export default function GallerySection({ items }: Props) {
                             transition={{ duration: 0.3 }}
                             className="absolute inset-0 flex items-end"
                         >
-                            {item.title && (
+                            {getLocalized('title', item) && (
                                 <motion.div
                                     variants={textVariants}
                                     transition={{ duration: 0.3, ease: 'easeOut' as const }}
                                     className="p-4 w-full"
                                 >
-                                    <p className="text-aru-putih text-sm font-semibold">{item.title}</p>
+                                    <p className="text-aru-putih text-sm font-semibold">{getLocalized('title', item)}</p>
                                 </motion.div>
                             )}
                         </motion.div>
@@ -115,14 +117,14 @@ export default function GallerySection({ items }: Props) {
                             {lightbox.image_url && (
                                 <img
                                     src={lightbox.image_url}
-                                    alt={lightbox.title || 'Detail Foto Kegiatan'}
+                                    alt={getLocalized('title', lightbox) || 'Detail Foto Kegiatan'}
                                     className="w-full h-auto rounded"
                                 />
                             )}
-                            {(lightbox.title || lightbox.description) && (
+                            {(getLocalized('title', lightbox) || getLocalized('description', lightbox)) && (
                                 <div className="mt-4 text-aru-putih">
-                                    {lightbox.title && <h3 className="font-heading font-semibold text-xl">{lightbox.title}</h3>}
-                                    {lightbox.description && <p className="text-aru-putih/70 mt-1">{lightbox.description}</p>}
+                                    {getLocalized('title', lightbox) && <h3 className="font-heading font-semibold text-xl">{getLocalized('title', lightbox)}</h3>}
+                                    {getLocalized('description', lightbox) && <p className="text-aru-putih/70 mt-1">{getLocalized('description', lightbox)}</p>}
                                 </div>
                             )}
                         </motion.div>

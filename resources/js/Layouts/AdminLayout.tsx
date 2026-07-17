@@ -14,6 +14,7 @@ const menuItems = [
     { label: 'Layanan', href: '/admin/services', icon: 'home_repair_service' },
     { label: 'Jangkauan', href: '/admin/coverage', icon: 'location_on' },
     { label: 'Klien', href: '/admin/clients', icon: 'business' },
+    { label: 'Testimoni', href: '/admin/testimonials', icon: 'rate_review' },
     { label: 'Galeri', href: '/admin/gallery', icon: 'photo_library' },
     { label: 'Legalitas', href: '/admin/legal', icon: 'gavel' },
     { label: 'Pesan', href: '/admin/contacts', icon: 'mail' },

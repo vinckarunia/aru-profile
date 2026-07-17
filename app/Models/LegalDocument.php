@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class LegalDocument extends Model
 {
     protected $fillable = [
-        'name', 'number', 'issuer', 'issued_date', 'expiry_date',
+        'name', 'name_en', 'number', 'issuer', 'issuer_en', 'issued_date', 'expiry_date',
         'document_image', 'sort_order', 'is_active',
     ];
 

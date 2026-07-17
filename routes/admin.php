@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\MediaUploadController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\StatController;
+use App\Http\Controllers\Admin\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
 // Auth (guest)
@@ -38,6 +39,7 @@ Route::middleware('auth.admin')->group(function () {
     Route::resource('clients', ClientController::class)->except(['create', 'edit', 'show']);
     Route::resource('legal', LegalDocumentController::class)->except(['create', 'edit', 'show']);
     Route::resource('gallery', GalleryItemController::class)->except(['create', 'edit', 'show']);
+    Route::resource('testimonials', TestimonialController::class)->except(['create', 'edit', 'show']);
 
     // Sort order (AJAX)
     Route::post('/stats/reorder', [StatController::class, 'reorder'])->name('stats.reorder');
@@ -45,6 +47,7 @@ Route::middleware('auth.admin')->group(function () {
     Route::post('/clients/reorder', [ClientController::class, 'reorder'])->name('clients.reorder');
     Route::post('/legal/reorder', [LegalDocumentController::class, 'reorder'])->name('legal.reorder');
     Route::post('/gallery/reorder', [GalleryItemController::class, 'reorder'])->name('gallery.reorder');
+    Route::post('/testimonials/reorder', [TestimonialController::class, 'reorder'])->name('testimonials.reorder');
 
     // Media upload
     Route::post('/media/upload', [MediaUploadController::class, 'store'])->name('media.upload');

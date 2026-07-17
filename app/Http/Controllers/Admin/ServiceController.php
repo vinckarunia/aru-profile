@@ -21,7 +21,9 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'icon' => 'nullable|string|max:100',
             'title' => 'required|string|max:255',
+            'title_en' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'description_en' => 'nullable|string',
         ]);
 
         Service::create([...$validated, 'sort_order' => Service::max('sort_order') + 1]);
@@ -34,7 +36,9 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'icon' => 'nullable|string|max:100',
             'title' => 'required|string|max:255',
+            'title_en' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'description_en' => 'nullable|string',
             'is_active' => 'boolean',
         ]);
 

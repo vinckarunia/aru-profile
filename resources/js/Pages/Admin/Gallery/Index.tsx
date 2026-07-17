@@ -8,11 +8,23 @@ interface Props { items: GalleryItem[]; }
 
 export default function GalleryIndex({ items }: Props) {
     const [editId, setEditId] = useState<number | null>(null);
-    const form = useForm({ title: '', description: '', image: '' });
-    const editForm = useForm({ title: '', description: '', image: '', is_active: true });
+    const form = useForm({ title: '', title_en: '', description: '', description_en: '', image: '' });
+    const editForm = useForm({ title: '', title_en: '', description: '', description_en: '', image: '', is_active: true });
 
     const handleCreate = (e: FormEvent) => { e.preventDefault(); form.post('/admin/gallery', { onSuccess: () => form.reset() }); };
-    const startEdit = (g: GalleryItem) => { setEditId(g.id); editForm.setData({ title: g.title || '', description: g.description || '', image: g.image || '', is_active: g.is_active }); };
+    
+    const startEdit = (g: GalleryItem) => { 
+        setEditId(g.id); 
+        editForm.setData({ 
+            title: g.title || '', 
+            title_en: g.title_en || '',
+            description: g.description || '', 
+            description_en: g.description_en || '',
+            image: g.image || '', 
+            is_active: g.is_active 
+        }); 
+    };
+    
     const handleUpdate = (e: FormEvent) => { e.preventDefault(); editForm.put(`/admin/gallery/${editId}`, { onSuccess: () => setEditId(null) }); };
 
     return (
@@ -20,10 +32,29 @@ export default function GalleryIndex({ items }: Props) {
             <Head title="Galeri" />
             <form onSubmit={handleCreate} className="bg-aru-putih rounded-lg p-6 mb-6 space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div><label className="block text-[11px] uppercase tracking-wide text-aru-abu mb-1">Judul</label><input type="text" value={form.data.title} onChange={e => form.setData('title', e.target.value)} className="w-full border border-surface-container-high rounded px-3 py-2 text-sm" /></div>
-                    <div><label className="block text-[11px] uppercase tracking-wide text-aru-abu mb-1">Deskripsi</label><input type="text" value={form.data.description} onChange={e => form.setData('description', e.target.value)} className="w-full border border-surface-container-high rounded px-3 py-2 text-sm" /></div>
+                    <div>
+                        <label className="block text-[11px] uppercase tracking-wide text-aru-abu mb-1">Judul (ID)</label>
+                        <input type="text" value={form.data.title} onChange={e => form.setData('title', e.target.value)} className="w-full border border-surface-container-high rounded px-3 py-2 text-sm" />
+                    </div>
+                    <div>
+                        <label className="block text-[11px] uppercase tracking-wide text-aru-abu mb-1">Judul (EN)</label>
+                        <input type="text" value={form.data.title_en} onChange={e => form.setData('title_en', e.target.value)} className="w-full border border-surface-container-high rounded px-3 py-2 text-sm" />
+                    </div>
                 </div>
-                <div><label className="block text-[11px] uppercase tracking-wide text-aru-abu mb-1">Gambar</label><ImageUploader currentUrl={null} onUploaded={(path) => form.setData('image', path)} /></div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label className="block text-[11px] uppercase tracking-wide text-aru-abu mb-1">Deskripsi (ID)</label>
+                        <textarea value={form.data.description} onChange={e => form.setData('description', e.target.value)} className="w-full border border-surface-container-high rounded px-3 py-2 text-sm" rows={2} />
+                    </div>
+                    <div>
+                        <label className="block text-[11px] uppercase tracking-wide text-aru-abu mb-1">Deskripsi (EN)</label>
+                        <textarea value={form.data.description_en} onChange={e => form.setData('description_en', e.target.value)} className="w-full border border-surface-container-high rounded px-3 py-2 text-sm" rows={2} />
+                    </div>
+                </div>
+                <div>
+                    <label className="block text-[11px] uppercase tracking-wide text-aru-abu mb-1">Gambar</label>
+                    <ImageUploader currentUrl={null} onUploaded={(path) => form.setData('image', path)} />
+                </div>
                 <button type="submit" disabled={form.processing} className="bg-aru-merah text-aru-putih px-6 py-2 rounded text-sm font-semibold">Tambah ke Galeri</button>
             </form>
 
@@ -33,7 +64,7 @@ export default function GalleryIndex({ items }: Props) {
                         {editId === g.id ? (
                             <form onSubmit={handleUpdate} className="space-y-3">
                                 <div>
-                                    <label className="block text-[10px] uppercase text-aru-abu mb-1">Judul</label>
+                                    <label className="block text-[10px] uppercase text-aru-abu mb-1">Judul (ID)</label>
                                     <input
                                         type="text"
                                         value={editForm.data.title}
@@ -42,12 +73,30 @@ export default function GalleryIndex({ items }: Props) {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-[10px] uppercase text-aru-abu mb-1">Deskripsi</label>
+                                    <label className="block text-[10px] uppercase text-aru-abu mb-1">Judul (EN)</label>
                                     <input
                                         type="text"
+                                        value={editForm.data.title_en}
+                                        onChange={e => editForm.setData('title_en', e.target.value)}
+                                        className="w-full border rounded px-2 py-1 text-sm"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-[10px] uppercase text-aru-abu mb-1">Deskripsi (ID)</label>
+                                    <textarea
                                         value={editForm.data.description}
                                         onChange={e => editForm.setData('description', e.target.value)}
                                         className="w-full border rounded px-2 py-1 text-sm"
+                                        rows={2}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-[10px] uppercase text-aru-abu mb-1">Deskripsi (EN)</label>
+                                    <textarea
+                                        value={editForm.data.description_en}
+                                        onChange={e => editForm.setData('description_en', e.target.value)}
+                                        className="w-full border rounded px-2 py-1 text-sm"
+                                        rows={2}
                                     />
                                 </div>
                                 <div>
@@ -80,8 +129,9 @@ export default function GalleryIndex({ items }: Props) {
                                             <span className="material-symbols-outlined text-aru-abu/30 text-4xl">photo_camera</span>
                                         </div>
                                     )}
-                                    {g.title && <h3 className="font-semibold text-sm text-aru-biru-tua">{g.title}</h3>}
+                                    {g.title && <h3 className="font-semibold text-sm text-aru-biru-tua">{g.title} <span className="text-[10px] font-normal text-aru-abu">/ {g.title_en || '-'}</span></h3>}
                                     {g.description && <p className="text-xs text-aru-abu mt-1">{g.description}</p>}
+                                    {g.description_en && <p className="text-[10px] text-aru-abu/70 italic mt-0.5">EN: {g.description_en}</p>}
                                     <span className={`text-[10px] px-2 py-0.5 rounded-full mt-2 inline-block ${g.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                                         {g.is_active ? 'Aktif' : 'Nonaktif'}
                                     </span>

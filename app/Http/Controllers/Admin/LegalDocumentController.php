@@ -23,8 +23,10 @@ class LegalDocumentController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'name_en' => 'nullable|string|max:255',
             'number' => 'nullable|string|max:255',
             'issuer' => 'nullable|string|max:255',
+            'issuer_en' => 'nullable|string|max:255',
             'issued_date' => 'nullable|date',
             'expiry_date' => 'nullable|date',
             'document_image' => 'nullable|string|max:500',
@@ -38,8 +40,10 @@ class LegalDocumentController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'name_en' => 'nullable|string|max:255',
             'number' => 'nullable|string|max:255',
             'issuer' => 'nullable|string|max:255',
+            'issuer_en' => 'nullable|string|max:255',
             'issued_date' => 'nullable|date',
             'expiry_date' => 'nullable|date',
             'document_image' => 'nullable|string|max:500',

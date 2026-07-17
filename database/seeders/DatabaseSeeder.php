@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             ClientSeeder::class,
             LegalDocumentSeeder::class,
             GallerySeeder::class,
+            TestimonialSeeder::class,
         ]);
     }
 }

@@ -7,8 +7,8 @@ interface Props { stats: StatItem[]; }
 
 export default function StatsIndex({ stats }: Props) {
     const [editId, setEditId] = useState<number | null>(null);
-    const form = useForm({ value: '', label: '' });
-    const editForm = useForm({ value: '', label: '', is_active: true });
+    const form = useForm({ value: '', label: '', label_en: '' });
+    const editForm = useForm({ value: '', label: '', label_en: '', is_active: true });
 
     const handleCreate = (e: FormEvent) => {
         e.preventDefault();
@@ -17,7 +17,7 @@ export default function StatsIndex({ stats }: Props) {
 
     const startEdit = (s: StatItem) => {
         setEditId(s.id);
-        editForm.setData({ value: s.value, label: s.label, is_active: s.is_active });
+        editForm.setData({ value: s.value, label: s.label, label_en: s.label_en || '', is_active: s.is_active });
     };
 
     const handleUpdate = (e: FormEvent) => {
@@ -36,8 +36,12 @@ export default function StatsIndex({ stats }: Props) {
                     <input type="text" value={form.data.value} onChange={e => form.setData('value', e.target.value)} className="w-full border border-surface-container-high rounded px-3 py-2 text-sm" placeholder="20+" />
                 </div>
                 <div className="flex-1 min-w-[200px]">
-                    <label className="block text-[11px] uppercase tracking-wide text-aru-abu mb-1">Label</label>
+                    <label className="block text-[11px] uppercase tracking-wide text-aru-abu mb-1">Label (ID)</label>
                     <input type="text" value={form.data.label} onChange={e => form.setData('label', e.target.value)} className="w-full border border-surface-container-high rounded px-3 py-2 text-sm" placeholder="Tahun Pengalaman" />
+                </div>
+                <div className="flex-1 min-w-[200px]">
+                    <label className="block text-[11px] uppercase tracking-wide text-aru-abu mb-1">Label (EN)</label>
+                    <input type="text" value={form.data.label_en} onChange={e => form.setData('label_en', e.target.value)} className="w-full border border-surface-container-high rounded px-3 py-2 text-sm" placeholder="Years of Experience" />
                 </div>
                 <button type="submit" disabled={form.processing} className="bg-aru-merah text-aru-putih px-6 py-2 rounded text-sm font-semibold">Tambah</button>
             </form>
@@ -48,7 +52,8 @@ export default function StatsIndex({ stats }: Props) {
                     <thead className="bg-aru-biru-muda">
                         <tr>
                             <th className="text-left px-4 py-3 font-semibold text-aru-biru-tua">Nilai</th>
-                            <th className="text-left px-4 py-3 font-semibold text-aru-biru-tua">Label</th>
+                            <th className="text-left px-4 py-3 font-semibold text-aru-biru-tua">Label (ID)</th>
+                            <th className="text-left px-4 py-3 font-semibold text-aru-biru-tua">Label (EN)</th>
                             <th className="text-left px-4 py-3 font-semibold text-aru-biru-tua">Status</th>
                             <th className="text-right px-4 py-3 font-semibold text-aru-biru-tua">Aksi</th>
                         </tr>
@@ -60,6 +65,7 @@ export default function StatsIndex({ stats }: Props) {
                                     <>
                                         <td className="px-4 py-3"><input type="text" value={editForm.data.value} onChange={e => editForm.setData('value', e.target.value)} className="border rounded px-2 py-1 text-sm w-full" /></td>
                                         <td className="px-4 py-3"><input type="text" value={editForm.data.label} onChange={e => editForm.setData('label', e.target.value)} className="border rounded px-2 py-1 text-sm w-full" /></td>
+                                        <td className="px-4 py-3"><input type="text" value={editForm.data.label_en} onChange={e => editForm.setData('label_en', e.target.value)} className="border rounded px-2 py-1 text-sm w-full" /></td>
                                         <td className="px-4 py-3">
                                             <select value={editForm.data.is_active ? '1' : '0'} onChange={e => editForm.setData('is_active', e.target.value === '1')} className="border rounded px-2 py-1 text-sm">
                                                 <option value="1">Aktif</option>
@@ -75,6 +81,7 @@ export default function StatsIndex({ stats }: Props) {
                                     <>
                                         <td className="px-4 py-3 font-semibold text-aru-biru-tua">{s.value}</td>
                                         <td className="px-4 py-3 text-aru-abu">{s.label}</td>
+                                        <td className="px-4 py-3 text-aru-abu">{s.label_en || '-'}</td>
                                         <td className="px-4 py-3">
                                             <span className={`text-xs px-2 py-1 rounded-full ${s.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                                                 {s.is_active ? 'Aktif' : 'Nonaktif'}

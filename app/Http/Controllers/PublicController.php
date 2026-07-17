@@ -9,6 +9,8 @@ use App\Models\LegalDocument;
 use App\Models\Service;
 use App\Models\SiteSetting;
 use App\Models\Stat;
+use App\Models\Testimonial;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -19,16 +21,19 @@ class PublicController extends Controller
         $settings = SiteSetting::allCached();
 
         // Resolve image URLs
-        $imageKeys = ['hero_background', 'og_image'];
+        $imageKeys = ['hero_background', 'og_image', 'leader_avatar'];
         foreach ($imageKeys as $key) {
             if (!empty($settings[$key])) {
                 $settings[$key] = url('/media/' . $settings[$key]);
             }
         }
 
-        // Parse mission JSON
-        if (!empty($settings['mission'])) {
-            $settings['mission'] = json_decode($settings['mission'], true);
+        // Parse JSON settings
+        $jsonKeys = ['mission', 'mission_en', 'values', 'values_en', 'competitive_advantages', 'competitive_advantages_en'];
+        foreach ($jsonKeys as $key) {
+            if (!empty($settings[$key])) {
+                $settings[$key] = json_decode($settings[$key], true);
+            }
         }
 
         return Inertia::render('Home', [
@@ -57,8 +62,31 @@ class PublicController extends Controller
                 }
                 return $g;
             }),
+            'testimonials' => Testimonial::where('is_active', true)->orderBy('sort_order')->get()->map(function ($t) {
+                $t->avatar_url = $t->avatar ? url('/media/' . $t->avatar) : null;
+                return $t;
+            }),
             'siteUrl' => url('/'),
         ]);
+    }
+
+    public function submitTestimonial(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'company_or_position' => 'required|string|max:255',
+            'type' => 'required|string|in:corporate,worker',
+            'testimonial' => 'required|string|max:1000',
+            'rating' => 'required|integer|min:1|max:5',
+        ]);
+
+        Testimonial::create([
+            ...$validated,
+            'is_active' => false, // requires admin approval
+            'sort_order' => Testimonial::max('sort_order') + 1,
+        ]);
+
+        return back()->with('success', 'Terima kasih atas ulasan Anda! Testimoni Anda akan ditampilkan setelah melalui proses moderasi.');
     }
 
     public function sitemap(): \Illuminate\Http\Response

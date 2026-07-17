@@ -32,7 +32,7 @@ export default function ClientsIndex({ clients }: Props) {
                         <label className="block text-[11px] uppercase tracking-wide text-aru-abu mb-1">Tipe Klien *</label>
                         <select value={form.data.type} onChange={e => form.setData('type', e.target.value)} className="w-full border border-surface-container-high rounded px-3 py-2 text-sm bg-white">
                             <option value="active">Klien Saat Ini</option>
-                            <option value="past">Klien Terdahulu</option>
+                            <option value="past">Referensi</option>
                         </select>
                     </div>
                 </div>
@@ -52,7 +52,7 @@ export default function ClientsIndex({ clients }: Props) {
                                 <input type="text" value={editForm.data.website_url} onChange={e => editForm.setData('website_url', e.target.value)} className="w-full border rounded px-3 py-2 text-sm" placeholder="Website URL" />
                                 <select value={editForm.data.type} onChange={e => editForm.setData('type', e.target.value)} className="w-full border rounded px-3 py-2 text-sm bg-white">
                                     <option value="active">Klien Saat Ini</option>
-                                    <option value="past">Klien Terdahulu</option>
+                                    <option value="past">Referensi</option>
                                 </select>
                                 <div className="flex items-center gap-2">
                                     <input type="checkbox" id={`is_active_${c.id}`} checked={editForm.data.is_active} onChange={e => editForm.setData('is_active', e.target.checked)} />
@@ -66,20 +66,22 @@ export default function ClientsIndex({ clients }: Props) {
                             </form>
                         ) : (
                             <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-4">
-                                    {c.logo_url ? (
-                                        <img src={c.logo_url} alt={c.name} className="h-12 w-auto object-contain animate-fade-in" />
-                                    ) : (
-                                        <span className="material-symbols-outlined text-aru-abu text-3xl">business</span>
-                                    )}
-                                    <div>
-                                        <h3 className="font-semibold text-aru-biru-tua">{c.name}</h3>
+                                <div className="flex items-center gap-4 min-w-0 flex-1">
+                                    <div className="w-24 h-12 flex items-center justify-center flex-shrink-0 bg-surface-container-low rounded p-1">
+                                        {c.logo_url ? (
+                                            <img src={c.logo_url} alt={c.name} className="max-h-full max-w-full object-contain animate-fade-in" />
+                                        ) : (
+                                            <span className="material-symbols-outlined text-aru-abu text-2xl">business</span>
+                                        )}
+                                    </div>
+                                    <div className="min-w-0 flex-1">
+                                        <h3 className="font-semibold text-aru-biru-tua truncate" title={c.name}>{c.name}</h3>
                                         <div className="flex gap-2 mt-1">
                                             <span className={`text-xs px-2 py-0.5 rounded-full ${c.is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                                                 {c.is_active ? 'Ditampilkan' : 'Disembunyikan'}
                                             </span>
                                             <span className={`text-xs px-2 py-0.5 rounded-full ${c.type === 'active' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'}`}>
-                                                {c.type === 'active' ? 'Klien Saat Ini' : 'Klien Terdahulu'}
+                                                {c.type === 'active' ? 'Klien Saat Ini' : 'Referensi'}
                                             </span>
                                         </div>
                                     </div>

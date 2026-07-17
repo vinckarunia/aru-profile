@@ -30,12 +30,14 @@ export interface Settings {
     privacy_url?: string;
     terms_url?: string;
     sitemap_url?: string;
+    careers_url?: string;
 }
 
 export interface StatItem {
     id: number;
     value: string;
     label: string;
+    label_en: string | null;
     sort_order: number;
     is_active: boolean;
 }
@@ -44,7 +46,9 @@ export interface ServiceItem {
     id: number;
     icon: string | null;
     title: string;
+    title_en: string | null;
     description: string | null;
+    description_en: string | null;
     sort_order: number;
     is_active: boolean;
 }
@@ -71,8 +75,10 @@ export interface ClientItem {
 export interface LegalDocItem {
     id: number;
     name: string;
+    name_en: string | null;
     number: string | null;
     issuer: string | null;
+    issuer_en: string | null;
     issued_date: string | null;
     expiry_date: string | null;
     document_image: string | null;
@@ -84,7 +90,9 @@ export interface LegalDocItem {
 export interface GalleryItem {
     id: number;
     title: string | null;
+    title_en: string | null;
     description: string | null;
+    description_en: string | null;
     image: string | null;
     image_url: string | null;
     thumb_url?: string | null;

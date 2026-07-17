@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Testimonial extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'company_or_position',
+        'type',
+        'testimonial',
+        'rating',
+        'avatar',
+        'sort_order',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+        'rating' => 'integer',
+        'sort_order' => 'integer',
+    ];
+}

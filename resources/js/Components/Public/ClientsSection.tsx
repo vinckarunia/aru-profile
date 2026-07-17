@@ -2,6 +2,7 @@ import { ClientItem } from '@/types';
 import { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion, Variants } from 'motion/react';
 import { Stagger, StaggerItem } from '../Motion/Stagger';
+import { useLanguage } from '@/Contexts/LanguageContext';
 
 interface Props {
     activeClients: ClientItem[];
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export default function ClientsSection({ activeClients, pastClients }: Props) {
+    const { t, lang } = useLanguage();
     const [activeTab, setActiveTab] = useState<'active' | 'past'>('active');
     const [isFirstEntrance, setIsFirstEntrance] = useState(true);
     const shouldReduceMotion = useReducedMotion();
@@ -35,15 +37,18 @@ export default function ClientsSection({ activeClients, pastClients }: Props) {
     };
 
     return (
-        <section className="py-20 bg-aru-biru-muda" id="klien">
+        <section className="py-20 bg-aru-biru-muda/30" id="klien">
             <div className="max-w-[1280px] mx-auto px-6">
-                <div className="text-center mb-8">
-                    <div className="inline-block bg-aru-putih text-aru-merah px-3 py-1 rounded text-[13px] font-semibold tracking-[0.08em] uppercase mb-4">
-                        KLIEN KAMI
+                <div className="text-center mb-8 space-y-3 max-w-2xl mx-auto">
+                    <div className="inline-block bg-white text-aru-merah px-3 py-1 rounded text-[13px] font-semibold tracking-[0.08em] uppercase shadow-sm">
+                        {t('clients_title')}
                     </div>
-                    <h2 className="font-heading font-bold text-[40px] leading-[1.3] text-aru-biru-tua">
-                        Dipercaya oleh Perusahaan Terkemuka
+                    <h2 className="font-heading font-bold text-[36px] md:text-[40px] leading-[1.3] text-aru-biru-tua">
+                        {lang === 'id' ? 'Dipercaya oleh Perusahaan Terkemuka' : 'Trusted by Leading Companies'}
                     </h2>
+                    <p className="text-sm md:text-base text-aru-abu leading-relaxed">
+                        {t('clients_subtitle')}
+                    </p>
                 </div>
 
                 {/* Tab Switcher */}
@@ -67,7 +72,7 @@ export default function ClientsSection({ activeClients, pastClients }: Props) {
                         {activeTab === 'active' && shouldReduceMotion && (
                             <div className="absolute inset-0 bg-aru-merah rounded-full -z-10 shadow-md" />
                         )}
-                        Klien Aktif
+                        {t('clients_active')}
                     </button>
                     <button
                         type="button"
@@ -88,7 +93,7 @@ export default function ClientsSection({ activeClients, pastClients }: Props) {
                         {activeTab === 'past' && shouldReduceMotion && (
                             <div className="absolute inset-0 bg-aru-merah rounded-full -z-10 shadow-md" />
                         )}
-                        Klien Terdahulu
+                        {t('clients_past')}
                     </button>
                 </div>
 
@@ -107,7 +112,7 @@ export default function ClientsSection({ activeClients, pastClients }: Props) {
                                         business
                                     </span>
                                     <p className="text-aru-abu text-sm font-medium">
-                                        Belum ada data klien untuk kategori ini.
+                                        {lang === 'id' ? 'Belum ada data klien untuk kategori ini.' : 'No client data available for this category.'}
                                     </p>
                                 </div>
                             ) : isFirstEntrance ? (
@@ -117,16 +122,21 @@ export default function ClientsSection({ activeClients, pastClients }: Props) {
                                 >
                                     {displayedClients.map((client) => {
                                         const CardContent = (
-                                            <>
+                                            <div className="relative flex flex-col items-center justify-center w-full h-full">
                                                 {client.logo_url ? (
-                                                    <img
-                                                        src={client.logo_url}
-                                                        alt={`Logo ${client.name}`}
-                                                        loading="lazy"
-                                                        width="120"
-                                                        height="64"
-                                                        className="max-h-16 w-auto object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                                                    />
+                                                    <>
+                                                        <img
+                                                            src={client.logo_url}
+                                                            alt={`Logo ${client.name}`}
+                                                            loading="lazy"
+                                                            width="120"
+                                                            height="64"
+                                                            className="max-h-12 max-w-full w-auto object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 group-hover:-translate-y-2.5 transition-all duration-300"
+                                                        />
+                                                        <span className="absolute bottom-[-22px] text-[9px] font-black text-aru-merah opacity-0 group-hover:opacity-100 group-hover:bottom-[-10px] transition-all duration-300 text-center uppercase tracking-wider truncate max-w-full px-1">
+                                                            {client.name}
+                                                        </span>
+                                                    </>
                                                 ) : (
                                                     <div className="text-center">
                                                         <span className="material-symbols-outlined text-aru-abu/40 text-3xl mb-1 block group-hover:text-aru-merah transition-colors" aria-hidden="true">
@@ -137,11 +147,11 @@ export default function ClientsSection({ activeClients, pastClients }: Props) {
                                                         </span>
                                                     </div>
                                                 )}
-                                            </>
+                                            </div>
                                         );
 
                                         const className =
-                                            'bg-aru-putih rounded-xl p-6 flex items-center justify-center min-h-[100px] group hover:shadow-md transition-all duration-300 hover:scale-[1.02] cursor-pointer';
+                                            'bg-aru-putih rounded-xl p-6 flex items-center justify-center min-h-[100px] group hover:shadow-md transition-all duration-300 hover:scale-[1.02] cursor-pointer border border-surface-container-high/40';
 
                                         return client.website_url ? (
                                             <StaggerItem
@@ -171,16 +181,21 @@ export default function ClientsSection({ activeClients, pastClients }: Props) {
                                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                                     {displayedClients.map((client) => {
                                         const CardContent = (
-                                            <>
+                                            <div className="relative flex flex-col items-center justify-center w-full h-full">
                                                 {client.logo_url ? (
-                                                    <img
-                                                        src={client.logo_url}
-                                                        alt={`Logo ${client.name}`}
-                                                        loading="lazy"
-                                                        width="120"
-                                                        height="64"
-                                                        className="max-h-16 w-auto object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                                                    />
+                                                    <>
+                                                        <img
+                                                            src={client.logo_url}
+                                                            alt={`Logo ${client.name}`}
+                                                            loading="lazy"
+                                                            width="120"
+                                                            height="64"
+                                                            className="max-h-12 max-w-full w-auto object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 group-hover:-translate-y-2.5 transition-all duration-300"
+                                                        />
+                                                        <span className="absolute bottom-[-22px] text-[9px] font-black text-aru-merah opacity-0 group-hover:opacity-100 group-hover:bottom-[-10px] transition-all duration-300 text-center uppercase tracking-wider truncate max-w-full px-1">
+                                                            {client.name}
+                                                        </span>
+                                                    </>
                                                 ) : (
                                                     <div className="text-center">
                                                         <span className="material-symbols-outlined text-aru-abu/40 text-3xl mb-1 block group-hover:text-aru-merah transition-colors" aria-hidden="true">
@@ -191,11 +206,11 @@ export default function ClientsSection({ activeClients, pastClients }: Props) {
                                                         </span>
                                                     </div>
                                                 )}
-                                            </>
+                                            </div>
                                         );
 
                                         const className =
-                                            'bg-aru-putih rounded-xl p-6 flex items-center justify-center min-h-[100px] group hover:shadow-md transition-all duration-300 hover:scale-[1.02] cursor-pointer';
+                                            'bg-aru-putih rounded-xl p-6 flex items-center justify-center min-h-[100px] group hover:shadow-md transition-all duration-300 hover:scale-[1.02] cursor-pointer border border-surface-container-high/40';
 
                                         return client.website_url ? (
                                             <a
