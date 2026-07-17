@@ -34,6 +34,12 @@ export default function ServicesSection({ services }: Props) {
         hover: shouldReduceMotion ? {} : { scale: 1.06 },
     };
 
+    const gridColsClass = 
+        services.length === 1 ? 'grid-cols-1' :
+        services.length === 2 ? 'grid-cols-1 md:grid-cols-2' :
+        services.length === 3 ? 'grid-cols-1 md:grid-cols-3' :
+        'grid-cols-1 md:grid-cols-2 lg:grid-cols-4';
+
     return (
         <section className="py-20 bg-aru-biru-muda/30" id="layanan">
             <div className="max-w-[1280px] mx-auto px-6">
@@ -52,14 +58,14 @@ export default function ServicesSection({ services }: Props) {
                 <Stagger
                     staggerDelay={0.08}
                     viewportAmount={0.18}
-                    className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+                    className={`grid gap-6 ${gridColsClass}`}
                 >
                     {services.map((service) => (
                         <motion.div
                             key={service.id}
                             variants={cardVariants}
                             whileHover={shouldReduceMotion ? {} : 'hover'}
-                            className="bg-aru-biru-tua rounded-2xl p-6 group transition-shadow duration-300 hover:shadow-xl cursor-default"
+                            className="bg-white border border-surface-container-high rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-aru-merah/25 transition-all cursor-default"
                         >
                             {service.icon && (
                                 <motion.span
@@ -70,10 +76,10 @@ export default function ServicesSection({ services }: Props) {
                                     {service.icon}
                                 </motion.span>
                             )}
-                            <h3 className="font-heading font-semibold text-[22px] leading-snug text-aru-putih mb-3">
+                            <h3 className="font-heading font-semibold text-[22px] leading-snug text-aru-biru-tua mb-3">
                                 {getLocalized('title', service)}
                             </h3>
-                            <p className="text-base leading-relaxed text-aru-putih/70">
+                            <p className="text-base leading-relaxed text-aru-biru-tua/70">
                                 {getLocalized('description', service)}
                             </p>
                         </motion.div>

@@ -147,7 +147,7 @@ export default function AboutSection({ settings }: Props) {
                 <div className="grid lg:grid-cols-12 gap-12 items-center">
                     {/* Left 5 cols - Leader Message Quote Card */}
                     <div className="lg:col-span-5">
-                        <div className="bg-gradient-to-br from-aru-biru-tua to-aru-biru-tua/95 text-aru-putih p-8 rounded-2xl shadow-xl relative overflow-hidden">
+                        <div className="bg-gradient-to-br from-aru-biru-tua to-aru-biru-tua/95 text-aru-putih p-8 pb-30 rounded-2xl shadow-xl relative border border-surface-container-high hover:border-aru-emas/30 hover:shadow-lg transition-all duration-300 overflow-hidden">
                             <span className="absolute -top-6 -right-6 text-white/5 text-[180px] font-serif select-none pointer-events-none">“</span>
                             
                             <div className="space-y-6 relative z-10">
@@ -158,24 +158,6 @@ export default function AboutSection({ settings }: Props) {
                                 <p className="text-sm md:text-base leading-relaxed italic text-white/90 font-medium">
                                     &ldquo;{leaderMessage}&rdquo;
                                 </p>
-
-                                <div className="flex items-center gap-4 pt-4 border-t border-white/10">
-                                    {leaderAvatar ? (
-                                        <img 
-                                            src={leaderAvatar} 
-                                            alt={leaderName} 
-                                            className="w-12 h-12 rounded-full object-cover border-2 border-aru-merah" 
-                                        />
-                                    ) : (
-                                        <div className="w-12 h-12 rounded-full bg-aru-merah text-aru-putih flex items-center justify-center font-bold text-lg">
-                                            {leaderName.charAt(0)}
-                                        </div>
-                                    )}
-                                    <div>
-                                        <h4 className="font-bold text-base text-white">{leaderName}</h4>
-                                        <p className="text-xs text-white/60 font-semibold">{leaderTitle}</p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

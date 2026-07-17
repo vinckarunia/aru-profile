@@ -101,7 +101,7 @@ export default function HeroSection({ settings, stats }: Props) {
                         <FadeUp delay={0.48} y={16}>
                             <div className="grid grid-cols-3 gap-6 pt-4 border-t border-aru-putih/20">
                                 {stats.map((stat) => (
-                                    <div key={stat.id}>
+                                    <div key={stat.id} className="bg-aru-biru-tua/65 p-4 rounded-lg">
                                         <div className="font-heading font-semibold text-[22px] leading-snug text-aru-emas">
                                             <AnimatedNumber value={stat.value} />
                                         </div>
